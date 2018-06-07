@@ -125,7 +125,7 @@ class MatchList extends React.Component {
     return (
       <React.Fragment>
         {fixturesInPlay.length > 0 && (
-          <Typography variant="display3">Current Gameday</Typography>
+          <Typography variant="display2">Current Gameday</Typography>
         )}
         {fixturesInPlay.map((fixture, index) => (
           <Result
@@ -142,7 +142,7 @@ class MatchList extends React.Component {
         <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
 
         {fixturesFinished.length > 0 && (
-          <Typography variant="display3">Finished</Typography>
+          <Typography variant="display2">Finished</Typography>
         )}
         {fixturesFinished.map((fixture, index) => (
           <Result
