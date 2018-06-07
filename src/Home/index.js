@@ -22,16 +22,16 @@ class Home extends Component {
     return (
       <React.Fragment>
         <Grid container className={classes.root} spacing={8}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12}>
             <Paper className={classes.paper}>
               <MatchList />
             </Paper>
           </Grid>
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
               <Typography variant="headline">Table</Typography>
             </Paper>
-          </Grid>
+          </Grid> */}
         </Grid>
       </React.Fragment>
     );

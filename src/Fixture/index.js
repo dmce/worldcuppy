@@ -37,6 +37,11 @@ const styles = theme => ({
 class Fixture extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      homeTeamPick: {},
+      awayTeamPick: {},
+    };
   }
 
   render() {
@@ -44,21 +49,18 @@ class Fixture extends React.Component {
       classes,
       fixture,
       pick,
-      pickedTeams,
       addPick,
       removePick,
+      homeTeamPick,
+      awayTeamPick,
     } = this.props;
 
     const homePicked = pick && pick.outcome === fixture.homeTeamName;
     const homeDisabled =
-      pickedTeams.findIndex(
-        p => p.team === fixture.homeTeamName && p.gameday !== fixture.gameday
-      ) !== -1;
+      homeTeamPick && homeTeamPick.gameday !== fixture.gameday;
     const awayPicked = pick && pick.outcome === fixture.awayTeamName;
     const awayDisabled =
-      pickedTeams.findIndex(
-        p => p.team === fixture.awayTeamName && p.gameday !== fixture.gameday
-      ) !== -1;
+      awayTeamPick && awayTeamPick.gameday !== fixture.gameday;
 
     return (
       <Paper
@@ -86,7 +88,13 @@ class Fixture extends React.Component {
             <Button
               onClick={
                 homePicked
-                  ? e => removePick(fixture.gameday, e)
+                  ? e =>
+                      removePick(
+                        fixture.Id,
+                        fixture.homeTeamName,
+                        fixture.gameday,
+                        e
+                      )
                   : e =>
                       addPick(
                         fixture.Id,
@@ -119,7 +127,13 @@ class Fixture extends React.Component {
             <Button
               onClick={
                 awayPicked
-                  ? e => removePick(fixture.gameday, e)
+                  ? e =>
+                      removePick(
+                        fixture.Id,
+                        fixture.awayTeamName,
+                        fixture.gameday,
+                        e
+                      )
                   : e =>
                       addPick(
                         fixture.Id,
@@ -153,7 +167,6 @@ class Fixture extends React.Component {
 Fixture.propTypes = {
   fixture: PropTypes.object,
   pick: PropTypes.object,
-  pickedTeams: PropTypes.array,
   addPick: PropTypes.func,
   removePick: PropTypes.func,
 };

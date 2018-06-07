@@ -25,6 +25,7 @@ class FixtureList extends React.Component {
 
     this.state = {
       open: false,
+      userPicks: props.userPicks,
     };
 
     this.addPick = this.addPick.bind(this);
@@ -36,7 +37,7 @@ class FixtureList extends React.Component {
   };
 
   addPick = (fixtureId, teamname, gameday, event) => {
-    let { userPicks, pickedTeams } = this.state;
+    let { userPicks } = this.state;
 
     const pick = new PickHelper(null, fixtureId, teamname, gameday);
 
@@ -46,10 +47,7 @@ class FixtureList extends React.Component {
         .then(() => {
           userPicks = userPicks.filter(u => u.gameday !== gameday);
           userPicks.push(pick);
-          pickedTeams = userPicks.map(p => {
-            return { gameday: p.gameday, team: p.outcome };
-          });
-          this.setState({ userPicks, pickedTeams });
+          this.setState({ userPicks });
         })
         .catch(error => {
           this.setState({
@@ -62,18 +60,15 @@ class FixtureList extends React.Component {
     });
   };
 
-  removePick = (gameday, event) => {
-    let { userPicks, pickedTeams } = this.state;
+  removePick = (fixtureId, teamname, gameday, event) => {
+    let { userPicks } = this.state;
 
-    const pick = new PickHelper(null, null, null, gameday);
+    const pick = new PickHelper(null, fixtureId, teamname, gameday);
 
     PickHelper.delete(pick)
       .then(() => {
         userPicks = userPicks.filter(u => u.gameday !== gameday);
-        pickedTeams = userPicks.map(p => {
-          return { gameday: p.gameday, team: p.outcome };
-        });
-        this.setState({ userPicks, pickedTeams });
+        this.setState({ userPicks });
       })
       .catch(error => {
         this.setState({
@@ -85,19 +80,17 @@ class FixtureList extends React.Component {
       });
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(props, state) {
     return {
-      userPicks: nextProps.userPicks,
-      pickedTeams: nextProps.userPicks.map(p => {
-        return { gameday: p.gameday, team: p.outcome };
-      }),
+      userPicks:
+        state.userPicks.length !== 0 ? state.userPicks : props.userPicks,
     };
   }
 
   render() {
     const { classes, fixtures } = this.props;
 
-    const { open, userPicks, pickedTeams, errorMessage } = this.state;
+    const { open, userPicks, errorMessage } = this.state;
 
     return (
       <React.Fragment>
@@ -117,7 +110,12 @@ class FixtureList extends React.Component {
               removePick={this.removePick}
               fixture={fixture}
               pick={userPicks.find(p => p.fixtureId === fixture.Id)}
-              pickedTeams={pickedTeams}
+              homeTeamPick={userPicks.find(
+                p => p.outcome === fixture.homeTeamName
+              )}
+              awayTeamPick={userPicks.find(
+                p => p.outcome === fixture.awayTeamName
+              )}
             />
           ),
           this
