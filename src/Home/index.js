@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MatchList from '../MatchList/';
+import Scoreboard from '../Scoreboard';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -22,16 +23,16 @@ class Home extends Component {
     return (
       <React.Fragment>
         <Grid container className={classes.root} spacing={8}>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12} md={8}>
             <Paper className={classes.paper}>
               <MatchList />
             </Paper>
           </Grid>
-          {/* <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
-              <Typography variant="headline">Table</Typography>
+              <Scoreboard />
             </Paper>
-          </Grid> */}
+          </Grid>
         </Grid>
       </React.Fragment>
     );

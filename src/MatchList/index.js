@@ -137,7 +137,7 @@ class MatchList extends React.Component {
         ))}
 
         {fixturesTimed.length > 0 && (
-          <Typography variant="display3">Upcoming</Typography>
+          <Typography variant="display2">Upcoming</Typography>
         )}
         <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
 
