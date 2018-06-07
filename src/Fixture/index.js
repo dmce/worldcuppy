@@ -1,0 +1,161 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { withStyles } from '@material-ui/core/styles';
+
+import { Button, Grid, Paper, Typography } from '@material-ui/core';
+
+const styles = theme => ({
+  oddGameday: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: theme.palette.primary[50],
+  }),
+  evenGameday: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: theme.palette.primary[100],
+  }),
+  pickedGameday: {
+    backgroundColor: theme.palette.primary[50],
+  },
+  button: {
+    backgroundColor: theme.palette.primary[50],
+  },
+  selectedButton: {},
+  availableButton: {
+    filter: 'brightness(0.8)',
+    '&:hover': {
+      filter: 'unset',
+    },
+  },
+  disabledFilter: { filter: 'grayscale(100%)' },
+  flagLeft: { paddingRight: 8 },
+  flagRight: { paddingLeft: 8 },
+});
+
+class Fixture extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {
+      classes,
+      fixture,
+      pick,
+      pickedTeams,
+      addPick,
+      removePick,
+    } = this.props;
+
+    const homePicked = pick && pick.outcome === fixture.homeTeamName;
+    const homeDisabled =
+      pickedTeams.findIndex(
+        p => p.team === fixture.homeTeamName && p.gameday !== fixture.gameday
+      ) !== -1;
+    const awayPicked = pick && pick.outcome === fixture.awayTeamName;
+    const awayDisabled =
+      pickedTeams.findIndex(
+        p => p.team === fixture.awayTeamName && p.gameday !== fixture.gameday
+      ) !== -1;
+
+    return (
+      <Paper
+        key={fixture.Id}
+        className={
+          fixture.gameday % 2 === 0 ? classes.oddGameday : classes.evenGameday
+        }
+      >
+        <Grid container spacing={8}>
+          <Grid item xs={3}>
+            <Typography color="textSecondary" variant="body1" align="left">
+              <strong>Gameday {fixture.gameday}</strong>
+            </Typography>
+            <Typography color="textSecondary" variant="body1" align="left">
+              <strong>
+                {fixture.kickOff} {fixture.date}
+              </strong>
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            className={homeDisabled ? classes.disabledFilter : ''}
+          >
+            <Button
+              onClick={
+                homePicked
+                  ? e => removePick(fixture.gameday, e)
+                  : e =>
+                      addPick(
+                        fixture.Id,
+                        fixture.homeTeamName,
+                        fixture.gameday,
+                        e
+                      )
+              }
+              disabled={homeDisabled}
+              fullWidth={true}
+              variant={homePicked ? 'raised' : 'flat'}
+              color={homePicked ? 'primary' : 'default'}
+              className={
+                homePicked ? classes.selectedButton : classes.availableButton
+              }
+            >
+              <img
+                className={classes.flagLeft}
+                src={`flags/sq/16/${fixture.homeTeamName}.png`}
+                alt={`${fixture.homeTeamName} Flag`}
+              />
+              {fixture.homeTeamName}
+            </Button>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            className={awayDisabled ? classes.disabledFilter : ''}
+          >
+            <Button
+              onClick={
+                awayPicked
+                  ? e => removePick(fixture.gameday, e)
+                  : e =>
+                      addPick(
+                        fixture.Id,
+                        fixture.awayTeamName,
+                        fixture.gameday,
+                        e
+                      )
+              }
+              fullWidth={true}
+              disabled={awayDisabled}
+              variant={awayPicked ? 'raised' : 'flat'}
+              color={awayPicked ? 'primary' : 'default'}
+              className={
+                awayPicked ? classes.selectedButton : classes.availableButton
+              }
+            >
+              {fixture.awayTeamName}
+              <img
+                className={classes.flagRight}
+                src={`flags/sq/16/${fixture.awayTeamName}.png`}
+                alt={`${fixture.awayTeamName} Flag`}
+              />
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
+}
+
+Fixture.propTypes = {
+  fixture: PropTypes.object,
+  pick: PropTypes.object,
+  pickedTeams: PropTypes.array,
+  addPick: PropTypes.func,
+  removePick: PropTypes.func,
+};
+
+export default withStyles(styles)(Fixture);
