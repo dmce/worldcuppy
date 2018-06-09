@@ -11,18 +11,31 @@ import {
   TableRow,
   TableCell,
   Typography,
+  CircularProgress,
+  Fade,
+  Card,
+  CardContent,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-const styles = theme => ({});
+const styles = theme => ({
+  p: {
+    padding: 10,
+  },
+  card: theme.mixins.gutters({
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: theme.palette.primary[50],
+  }),
+});
 
 class Scoreboard extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      scoreboardData: [],
       open: false,
+      isLoading: true,
     };
   }
 
@@ -34,6 +47,7 @@ class Scoreboard extends React.Component {
     this.setState({
       scoreboardData: d,
       open: false,
+      isLoading: false,
     });
   }
 
@@ -42,32 +56,56 @@ class Scoreboard extends React.Component {
   };
 
   render() {
-    const { scoreboardData, open } = this.state;
+    const { scoreboardData, open, isLoading } = this.state;
     const { classes } = this.props;
 
     return (
       <React.Fragment>
         <Typography variant="display2">Scoreboard</Typography>
-        {scoreboardData && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Player</TableCell>
-                <TableCell>Picks</TableCell>
-                <TableCell>Points</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {scoreboardData.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row._id.username}</TableCell>
-                  <TableCell>{row.Picks}</TableCell>
-                  <TableCell>{row.Points}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
+        <Card className={classes.card}>
+          <CardContent>
+            {scoreboardData ? (
+              scoreboardData.length > 0 ? (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Player</TableCell>
+                      <TableCell>Picks</TableCell>
+                      <TableCell>Points</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {scoreboardData.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{row._id.username}</TableCell>
+                        <TableCell>{row.Picks}</TableCell>
+                        <TableCell>{row.Points}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                  align="center"
+                >
+                  No matches have finished
+                </Typography>
+              )
+            ) : (
+              <Fade
+                in={isLoading}
+                style={{
+                  transitionDelay: isLoading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+              >
+                <CircularProgress />
+              </Fade>
+            )}
+          </CardContent>
+        </Card>
         <Snackbar
           open={open}
           anchorOrigin={{

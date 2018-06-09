@@ -72,121 +72,135 @@ class Result extends React.Component {
   }
 
   render() {
-    const { fixture, userPick, classes, key } = this.props;
+    const { fixture, userPick, classes, key, inPlay } = this.props;
     const { allPicks } = this.state;
 
     return (
       <Card>
-        <CardContent
-        // className={fixture.picks.user ? classes.picked : classes.notPicked}
-        >
-          <Grid container key={key} spacing={24}>
-            <Grid item xs={3}>
-              <Typography
-                color="textSecondary"
-                variant="display1"
-                align="center"
-              >
-                {fixture.kickOff}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="caption"
-                align="center"
-              >
-                {fixture.date}
-              </Typography>
-              {fixture.status === 'IN_PLAY' ? (
+        {fixture ? (
+          <CardContent>
+            <Grid container key={key} spacing={24}>
+              <Grid item xs={3}>
+                <Typography
+                  color="textSecondary"
+                  variant="display1"
+                  align="center"
+                >
+                  {fixture.kickOff}
+                </Typography>
                 <Typography
                   color="textSecondary"
                   variant="caption"
                   align="center"
                 >
-                  <Timelapse color="primary" />
+                  {fixture.date}
                 </Typography>
-              ) : (
-                ''
+                {fixture.status === 'IN_PLAY' ? (
+                  <Typography
+                    color="textSecondary"
+                    variant="caption"
+                    align="center"
+                  >
+                    <Timelapse color="primary" />
+                  </Typography>
+                ) : (
+                  ''
+                )}
+              </Grid>
+              <Grid item xs={7}>
+                <Grid container alignItems="stretch">
+                  <Grid item xs={10}>
+                    <img
+                      className={classes.flag}
+                      src={`flags/sq/48/${fixture.homeTeamName}.png`}
+                      alt={`${fixture.homeTeamName} Flag`}
+                    />
+                    <Typography
+                      component="span"
+                      className={classes.fixtureData}
+                    >
+                      {fixture.homeTeamName}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography
+                      component="span"
+                      className={classes.fixtureData}
+                    >
+                      {fixture.outcome.homeGoals}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <img
+                      className={classes.flag}
+                      src={`flags/sq/48/${fixture.awayTeamName}.png`}
+                      alt={`${fixture.awayTeamName} Flag`}
+                    />
+
+                    <Typography
+                      component="span"
+                      className={classes.fixtureData}
+                    >
+                      {fixture.awayTeamName}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Typography
+                      component="span"
+                      className={classes.fixtureData}
+                    >
+                      {fixture.outcome.awayGoals}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography align="center" component="span">
+                  {userPick && (
+                    <Chip
+                      label={userPick.outcome}
+                      classes={{
+                        root: classes.root,
+                        avatar: classes.avatar,
+                        label: classes.label,
+                      }}
+                      className={classes.chip}
+                      avatar={
+                        <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
+                      }
+                    />
+                  )}
+                </Typography>
+                <Typography
+                  color="textSecondary"
+                  variant="display3"
+                  align="center"
+                >
+                  {userPick.resolved ? userPick.points : '-'}
+                </Typography>
+              </Grid>
+              {allPicks && (
+                <Grid item xs={12}>
+                  {allPicks.map(p => (
+                    <Chip
+                      key={p._id}
+                      label={p.username}
+                      classes={{
+                        root: classes.root,
+                        avatar: classes.avatar,
+                        label: classes.label,
+                      }}
+                      className={classes.chip}
+                      avatar={<Avatar src={`flags/sq/16/${p.outcome}.png`} />}
+                    />
+                  ))}
+                </Grid>
               )}
             </Grid>
-            <Grid item xs={7}>
-              <Grid container alignItems="stretch">
-                <Grid item xs={10}>
-                  <img
-                    className={classes.flag}
-                    src={`flags/sq/48/${fixture.homeTeamName}.png`}
-                    alt={`${fixture.homeTeamName} Flag`}
-                  />
-                  <Typography component="span" className={classes.fixtureData}>
-                    {fixture.homeTeamName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  <Typography component="span" className={classes.fixtureData}>
-                    {fixture.outcome.homeGoals}
-                  </Typography>
-                </Grid>
-                <Grid item xs={10}>
-                  <img
-                    className={classes.flag}
-                    src={`flags/sq/48/${fixture.awayTeamName}.png`}
-                    alt={`${fixture.awayTeamName} Flag`}
-                  />
-
-                  <Typography component="span" className={classes.fixtureData}>
-                    {fixture.awayTeamName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  <Typography component="span" className={classes.fixtureData}>
-                    {fixture.outcome.awayGoals}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography align="center" component="span">
-                {userPick && (
-                  <Chip
-                    label={userPick.outcome}
-                    classes={{
-                      root: classes.root,
-                      avatar: classes.avatar,
-                      label: classes.label,
-                    }}
-                    className={classes.chip}
-                    avatar={
-                      <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
-                    }
-                  />
-                )}
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="display3"
-                align="center"
-              >
-                {userPick.resolved ? userPick.points : '-'}
-              </Typography>
-            </Grid>
-            {allPicks && (
-              <Grid item xs={12}>
-                {allPicks.map(p => (
-                  <Chip
-                    key={p._id}
-                    label={p.username}
-                    classes={{
-                      root: classes.root,
-                      avatar: classes.avatar,
-                      label: classes.label,
-                    }}
-                    className={classes.chip}
-                    avatar={<Avatar src={`flags/sq/16/${p.outcome}.png`} />}
-                  />
-                ))}
-              </Grid>
-            )}
-          </Grid>
-        </CardContent>
+          </CardContent>
+        ) : (
+          <CardContent>RED</CardContent>
+        )}
       </Card>
     );
   }

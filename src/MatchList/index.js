@@ -2,12 +2,18 @@ import React from 'react';
 
 import FixtureHelper from '../Helpers/fixture';
 import PickHelper from '../Helpers/pick';
-import Result from '../Result';
+import ResultList from '../ResultList';
 import FixtureList from '../FixtureList';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { IconButton, Snackbar, Typography } from '@material-ui/core';
+import {
+  CircularProgress,
+  Fade,
+  IconButton,
+  Snackbar,
+  Typography,
+} from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -18,12 +24,8 @@ class MatchList extends React.Component {
     super(props);
 
     this.state = {
-      fixturesTimed: [],
-      fixturesInPlay: [],
-      fixturesFinished: [],
-      fixturesScheduled: [],
-      userPicks: [],
       open: false,
+      isLoading: true,
     };
   }
 
@@ -109,6 +111,7 @@ class MatchList extends React.Component {
       fixturesInPlay,
       fixturesFinished,
       userPicks,
+      isLoading: false,
     });
   }
 
@@ -119,39 +122,68 @@ class MatchList extends React.Component {
       fixturesFinished,
       userPicks,
       open,
+      isLoading,
     } = this.state;
     const { classes } = this.props;
 
     return (
       <React.Fragment>
-        {fixturesInPlay.length > 0 && (
-          <Typography variant="display2">Current Gameday</Typography>
-        )}
-        {fixturesInPlay.map((fixture, index) => (
-          <Result
-            key={index}
-            fixture={fixture}
-            userPick={userPicks.find(p => p.fixtureId === fixture.Id)}
+        <Typography variant="display2">Current Gameday</Typography>
+        {isLoading ? (
+          <Fade
+            in={isLoading}
+            style={{
+              transitionDelay: isLoading ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+          >
+            <CircularProgress />
+          </Fade>
+        ) : (
+          <ResultList
+            fixtures={fixturesInPlay}
+            userPicks={userPicks}
             showAllPicks={true}
+            inPlay={true}
+            defaultMessage="There are no in-play matches"
           />
-        ))}
-
-        {fixturesTimed.length > 0 && (
-          <Typography variant="display2">Upcoming</Typography>
         )}
-        <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
 
-        {fixturesFinished.length > 0 && (
-          <Typography variant="display2">Finished</Typography>
+        <Typography variant="display2">Upcoming</Typography>
+        {isLoading ? (
+          <Fade
+            in={isLoading}
+            style={{
+              transitionDelay: isLoading ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+          >
+            <CircularProgress />
+          </Fade>
+        ) : (
+          <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
         )}
-        {fixturesFinished.map((fixture, index) => (
-          <Result
-            key={index}
-            fixture={fixture}
-            userPick={userPicks.find(p => p.fixtureId === fixture.Id)}
+
+        <Typography variant="display2">Finished</Typography>
+        {isLoading ? (
+          <Fade
+            in={isLoading}
+            style={{
+              transitionDelay: isLoading ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+          >
+            <CircularProgress />
+          </Fade>
+        ) : (
+          <ResultList
+            fixtures={fixturesFinished}
+            userPicks={userPicks}
             showAllPicks={true}
+            inPlay={false}
+            defaultMessage="There are no finished matches"
           />
-        ))}
+        )}
 
         <Snackbar
           open={open}

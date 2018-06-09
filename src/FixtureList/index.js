@@ -11,12 +11,10 @@ import { IconButton, Snackbar, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
-  table: {
-    border: 1,
-    width: '100%',
-    borderStyle: 'solid',
-    borderColor: theme.palette.grey[300],
-  },
+  root: theme.mixins.gutters({
+    marginTop: 10,
+    marginBottom: 10,
+  }),
 });
 
 class FixtureList extends React.Component {
@@ -94,10 +92,6 @@ class FixtureList extends React.Component {
 
     return (
       <React.Fragment>
-        <Typography>
-          Azure Functions perform slowly. To be investigated and fetch feedback
-          needed
-        </Typography>
         <Typography>
           Pick one team from each gameday. You cannot pick the same team more
           than once.
