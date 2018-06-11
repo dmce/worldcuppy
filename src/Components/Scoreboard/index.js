@@ -39,9 +39,10 @@ class Scoreboard extends React.Component {
   async componentDidMount() {
     try {
       const scoreboardData = await ScoreboardHelper.get();
+      const parsedScoreboardData = JSON.parse(scoreboardData);
 
       this.setState({
-        scoreboardData: scoreboardData.scoreboard,
+        scoreboardData: parsedScoreboardData.scoreboard,
         isLoading: false,
       });
     } catch (error) {
@@ -109,9 +110,9 @@ class Scoreboard extends React.Component {
         {!hasError &&
           !isLoading &&
           scoreboardData &&
-          scoreboardData.length > 0 && (
+          scoreboardData.length === 0 && (
             <Typography color="textSecondary" variant="body1">
-              No matches have finished
+              There are no finished matches
             </Typography>
           )}
       </React.Fragment>
