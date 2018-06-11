@@ -5,7 +5,7 @@ import Home from './Home';
 import Admin from './Admin';
 import ProtectedRoute from './Authentication/protected-route';
 import Login from './Authentication/login';
-import Callback from './Callback';
+import Callback from './Components/Callback';
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

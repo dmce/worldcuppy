@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MatchList from '../MatchList/';
-import Scoreboard from '../Scoreboard';
+import MatchList from '../Components/MatchList/';
+import Scoreboard from '../Components/Scoreboard';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
