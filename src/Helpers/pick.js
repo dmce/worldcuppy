@@ -1,26 +1,30 @@
 import { default as api } from '../Services/api';
 
 export default class Pick {
-  constructor(id, fixtureId, outcome, gameday) {
+  constructor(id, fixtureId, outcome, gameday, user = localStorage.getItem('sub'), username = localStorage.getItem('name')) {
     this.Id = id;
     this.fixtureId = fixtureId;
     this.outcome = outcome;
     this.gameday = gameday;
-    this.user = localStorage.getItem('sub');
-    this.username = localStorage.getItem('name');
-    this.points = 0;
+    this.user = user;
+    this.username = username
     this.resolved = false;
+    this.points = 0
   }
 
-  inPlayPoints(winningTeam) {
-    switch (winningTeam) {
+  inPlayPoints(outcome) {
+    if (!this.resolved) {
+    switch (outcome) {
       case 'd':
-        return 1;
+        this.points = 1;
+        break;
       case this.outcome:
-        return 3;
+        this.points = 3;
+        break;
       default:
-        return 0;
-    }
+        this.points = 0;
+        break;
+    }}
   }
 
   static add(body) {
