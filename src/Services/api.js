@@ -1,8 +1,10 @@
 import { worldCuppyConfig as config } from './api-config';
+import Raven from 'raven-js';
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    Raven.captureException(response);
+    throw new Error(response);
   }
   return response;
 }
@@ -20,7 +22,10 @@ const getData = async (method, endPoint, route = '') => {
   })
     .then(handleErrors)
     .then(response => response.json())
-    .catch(error => Promise.reject(error));
+    .catch(error => {
+      Raven.captureException(error);
+      throw new Error(error);
+    });
 };
 
 const postData = async (method, endPoint, route = '', body = '') => {
@@ -37,7 +42,10 @@ const postData = async (method, endPoint, route = '', body = '') => {
   })
     .then(handleErrors)
     .then(response => response.json())
-    .catch(error => Promise.reject(error));
+    .catch(error => {
+      Raven.captureException(error);
+      throw new Error(error);
+    });
 };
 
 const worldCupApi = {

@@ -1,4 +1,5 @@
 import { footballDataOrgConfig as config } from './api-config';
+import Raven from 'raven-js';
 
 const header = new Headers({
   'X-Auth-Token': `${config.key}`,
@@ -6,7 +7,8 @@ const header = new Headers({
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    Raven.captureException(response);
+    throw new Error(response);
   }
   return response;
 }
@@ -18,11 +20,10 @@ const accessApi = async (method, endPoint, route = '') => {
     headers: header,
   })
     .then(handleErrors)
-    .then(response => {
-      return response.json();
-    })
+    .then(response => response.json())
     .catch(error => {
-      return Promise.reject(error);
+      Raven.captureException(error);
+      throw new Error(error);
     });
 };
 
