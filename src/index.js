@@ -4,7 +4,8 @@ import App from './App';
 import Auth from './Authentication/auth-service';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Raven from 'raven-js';
+
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 import lightGreen from '@material-ui/core/colors/lightGreen';
@@ -18,9 +19,12 @@ const theme = createMuiTheme({
 
 const auth = new Auth();
 
+Raven.config(
+  'https://e92c038f80e94b9c905340094b9a7c30@sentry.io/1223433'
+).install();
+
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <CssBaseline />
     <Router>
       <App auth={auth} />
     </Router>
