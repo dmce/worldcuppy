@@ -8,6 +8,7 @@
     "auth0-js": "^9.0.0",
     "date-fns": "^1.29.0",
     "lodash": "^4.17.10",
+    "raven-js": "^3.26.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-router": "^4.1.1",
