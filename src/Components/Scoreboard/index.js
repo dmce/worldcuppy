@@ -112,7 +112,7 @@ class Scoreboard extends React.Component {
           scoreboardData &&
           scoreboardData.length === 0 && (
             <Typography color="textSecondary" variant="body1">
-              There are no finished matches
+              Scoreboards still to be calculated
             </Typography>
           )}
       </React.Fragment>
