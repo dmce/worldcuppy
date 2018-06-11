@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pick from '../../Helpers/pick';
+import PickHelper from '../../Helpers/pick';
 
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -12,11 +12,15 @@ import {
   Typography,
 } from '@material-ui/core';
 
+import yellow from '@material-ui/core/colors/yellow';
+import red from '@material-ui/core/colors/red';
+
 import Timelapse from '@material-ui/icons/Timelapse';
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.primary[100],
+    backgroundColor: red[50],
+    margin: theme.spacing.unit / 4,
     borderRadius: 8,
     height: 24,
     padding: 4,
@@ -42,8 +46,13 @@ const styles = theme => ({
     width: 16,
     height: 16,
   },
-  chip: {
-    margin: theme.spacing.unit / 4,
+  winChip: {
+    backgroundColor: theme.palette.primary[100],
+    
+  },
+  drawChip: {
+    backgroundColor: yellow[50],
+    
   },
   flag: {
     paddingRight: 8,
@@ -59,21 +68,34 @@ class Result extends React.Component {
     };
   }
 
+  processPicks = (picksData, outcome) => {
+    let userPicks = [];
+    picksData.picks.forEach((u, i) => {
+      const p = new PickHelper(u._id, u.fixtureId, u.outcome, u.gameday, u.user, u.username);
+      p.inPlayPoints(outcome);
+      userPicks.push(p);
+    });
+
+    return { userPicks };
+  };
+
   async componentDidMount() {
     const { showAllPicks, fixture } = this.props;
 
     let pickData;
     if (showAllPicks) {
-      pickData = await Pick.getByFixtureId(fixture.Id);
-      pickData = JSON.parse(pickData);
+      pickData = await PickHelper.getByFixtureId(fixture.Id);
+      pickData = this.processPicks(JSON.parse(pickData), fixture.outcome.result);
     }
 
-    this.setState({ allPicks: pickData.picks });
+    this.setState({ allPicks: pickData.userPicks });
   }
 
   render() {
-    const { fixture, userPick, classes, key, inPlay } = this.props;
+    const { fixture, userPick, classes, key } = this.props;
     const { allPicks } = this.state;
+
+    userPick && userPick.inPlayPoints(fixture.outcome.result)
 
     return (
       <Card>
@@ -164,7 +186,7 @@ class Result extends React.Component {
                         avatar: classes.avatar,
                         label: classes.label,
                       }}
-                      className={classes.chip}
+                      className={`${userPick.points === 3 && classes.winChip} ${userPick.points === 1 && classes.drawChip}`}
                       avatar={
                         <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
                       }
@@ -176,21 +198,21 @@ class Result extends React.Component {
                   variant="display3"
                   align="center"
                 >
-                  {userPick.resolved ? userPick.points : '-'}
+                  {userPick && userPick.points}
                 </Typography>
               </Grid>
               {allPicks && (
                 <Grid item xs={12}>
                   {allPicks.map(p => (
                     <Chip
-                      key={p._id}
-                      label={p.username}
+                      key={p.Id}
+                      label={`${p.username} - ${p.points}`}
                       classes={{
                         root: classes.root,
                         avatar: classes.avatar,
                         label: classes.label,
                       }}
-                      className={classes.chip}
+                      className={`${p.points === 3 && classes.winChip} ${p.points === 1 && classes.drawChip}`}
                       avatar={<Avatar src={`flags/sq/16/${p.outcome}.png`} />}
                     />
                   ))}

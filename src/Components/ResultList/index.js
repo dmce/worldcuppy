@@ -25,14 +25,13 @@ class ResultList extends React.Component {
 
     return (
       <React.Fragment>
-        {fixtures > 0 ? (
+        {fixtures && fixtures.length > 0 ? (
           fixtures.map((fixture, index) => (
             <Result
               key={index}
               fixture={fixture}
               userPick={userPicks.find(p => p.fixtureId === fixture.Id)}
               showAllPicks={true}
-              inPlay={true}
             />
           ))
         ) : (

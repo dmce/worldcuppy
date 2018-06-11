@@ -51,10 +51,10 @@ class MatchList extends React.Component {
       );
 
       // TODO: REMOVE THIS
-      // if (i === 0) {
-      //   fixture.status = 'FINISHED';
-      //   fixture.goals(2, 1);
-      // }
+      //if (i === 0) {
+      //  fixture.status = 'FINISHED';
+      //  fixture.goals(2, 3);
+      //}
 
       // TODO: END
 
@@ -70,7 +70,7 @@ class MatchList extends React.Component {
         case 'IN_PLAY':
         case 'GAMEDAY_ACTIVE':
         case 'GAMEDAY_FINISHED':
-          fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
+          //fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
           fixturesInPlay.push(fixture);
           break;
         case 'TIMED':
@@ -88,7 +88,7 @@ class MatchList extends React.Component {
   processPicks = picksData => {
     let userPicks = [];
     picksData.picks.forEach((u, i) => {
-      userPicks.push(new PickHelper(u._id, u.fixtureId, u.outcome, u.gameday));
+      userPicks.push(new PickHelper(u._id, u.fixtureId, u.outcome, u.gameday, u.user, u.username));
     });
 
     return { userPicks };
@@ -153,7 +153,6 @@ class MatchList extends React.Component {
             fixtures={fixturesInPlay}
             userPicks={userPicks}
             showAllPicks={true}
-            inPlay={true}
             defaultMessage="There are no in-play matches"
           />
         )}
@@ -189,7 +188,6 @@ class MatchList extends React.Component {
             fixtures={fixturesFinished}
             userPicks={userPicks}
             showAllPicks={true}
-            inPlay={false}
             defaultMessage="There are no finished matches"
           />
         )}
