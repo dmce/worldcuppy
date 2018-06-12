@@ -13,6 +13,7 @@ import {
   Fade,
   Card,
   CardContent,
+  Paper,
 } from '@material-ui/core';
 
 const styles = theme => ({
@@ -24,6 +25,10 @@ const styles = theme => ({
     marginBottom: 10,
     backgroundColor: theme.palette.primary[50],
   }),
+  paper: {
+    marginTop: theme.spacing.unit * 1,
+    padding: theme.spacing.unit * 2,
+  },
 });
 
 class Scoreboard extends React.Component {
@@ -60,7 +65,7 @@ class Scoreboard extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <Paper className={classes.paper}>
         <Typography variant="display2">Scoreboard</Typography>
         {isLoading && (
           <Fade
@@ -115,7 +120,7 @@ class Scoreboard extends React.Component {
               Scoreboards still to be calculated
             </Typography>
           )}
-      </React.Fragment>
+      </Paper>
     );
   }
 }

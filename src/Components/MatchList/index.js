@@ -13,11 +13,17 @@ import {
   IconButton,
   Snackbar,
   Typography,
+  Paper,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
-const styles = theme => ({});
+const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing.unit * 1,
+    padding: theme.spacing.unit * 2,
+  },
+});
 
 class MatchList extends React.Component {
   constructor(props) {
@@ -88,7 +94,16 @@ class MatchList extends React.Component {
   processPicks = picksData => {
     let userPicks = [];
     picksData.picks.forEach((u, i) => {
-      userPicks.push(new PickHelper(u._id, u.fixtureId, u.outcome, u.gameday, u.user, u.username));
+      userPicks.push(
+        new PickHelper(
+          u._id,
+          u.fixtureId,
+          u.outcome,
+          u.gameday,
+          u.user,
+          u.username
+        )
+      );
     });
 
     return { userPicks };
@@ -137,60 +152,66 @@ class MatchList extends React.Component {
 
     return (
       <React.Fragment>
-        <Typography variant="display2">Current Gameday</Typography>
-        {isLoading ? (
-          <Fade
-            in={isLoading}
-            style={{
-              transitionDelay: isLoading ? '800ms' : '0ms',
-            }}
-            unmountOnExit
-          >
-            <CircularProgress />
-          </Fade>
-        ) : (
-          <ResultList
-            fixtures={fixturesInPlay}
-            userPicks={userPicks}
-            showAllPicks={true}
-            defaultMessage="There are no in-play matches"
-          />
-        )}
+        <Paper className={classes.paper}>
+          <Typography variant="display2">Current Gameday</Typography>
+          {isLoading ? (
+            <Fade
+              in={isLoading}
+              style={{
+                transitionDelay: isLoading ? '800ms' : '0ms',
+              }}
+              unmountOnExit
+            >
+              <CircularProgress />
+            </Fade>
+          ) : (
+            <ResultList
+              fixtures={fixturesInPlay}
+              userPicks={userPicks}
+              showAllPicks={true}
+              defaultMessage="There are no in-play matches"
+            />
+          )}
+        </Paper>
 
-        <Typography variant="display2">Upcoming</Typography>
-        {isLoading ? (
-          <Fade
-            in={isLoading}
-            style={{
-              transitionDelay: isLoading ? '800ms' : '0ms',
-            }}
-            unmountOnExit
-          >
-            <CircularProgress />
-          </Fade>
-        ) : (
-          <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
-        )}
+        <Paper className={classes.paper}>
+          <Typography variant="display2">Upcoming</Typography>
+          {isLoading ? (
+            <Fade
+              in={isLoading}
+              style={{
+                transitionDelay: isLoading ? '800ms' : '0ms',
+              }}
+              unmountOnExit
+            >
+              <CircularProgress />
+            </Fade>
+          ) : (
+            <FixtureList fixtures={fixturesTimed} userPicks={userPicks} />
+          )}
+        </Paper>
 
-        <Typography variant="display2">Finished</Typography>
-        {isLoading ? (
-          <Fade
-            in={isLoading}
-            style={{
-              transitionDelay: isLoading ? '800ms' : '0ms',
-            }}
-            unmountOnExit
-          >
-            <CircularProgress />
-          </Fade>
-        ) : (
-          <ResultList
-            fixtures={fixturesFinished}
-            userPicks={userPicks}
-            showAllPicks={true}
-            defaultMessage="There are no finished matches"
-          />
-        )}
+        <Paper className={classes.paper}>
+          <Typography variant="display2">Finished</Typography>
+          {isLoading ? (
+            <Fade
+              in={isLoading}
+              style={{
+                transitionDelay: isLoading ? '800ms' : '0ms',
+              }}
+              unmountOnExit
+            >
+              <CircularProgress />
+            </Fade>
+          ) : (
+            <ResultList
+              fixtures={fixturesFinished}
+              userPicks={userPicks}
+              showAllPicks={true}
+              defaultMessage="There are no finished matches"
+            />
+          )}
+        </Paper>
 
         <Snackbar
           open={open}

@@ -35,13 +35,9 @@ class ResultList extends React.Component {
             />
           ))
         ) : (
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography color="textSecondary" variant="body1" align="center">
-                {defaultMessage}
-              </Typography>
-            </CardContent>
-          </Card>
+          <Typography color="textSecondary" variant="body1">
+            {defaultMessage}
+          </Typography>
         )}
       </React.Fragment>
     );

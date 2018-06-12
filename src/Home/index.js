@@ -4,15 +4,10 @@ import Scoreboard from '../Components/Scoreboard';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    margin: theme.spacing.unit * 1,
-    padding: theme.spacing.unit * 2,
   },
 });
 
@@ -23,14 +18,10 @@ class Home extends Component {
       <React.Fragment>
         <Grid container className={classes.root} spacing={8}>
           <Grid item xs={12} md={8}>
-            <Paper className={classes.paper}>
-              <MatchList />
-            </Paper>
+            <MatchList />
           </Grid>
           <Grid item xs={12} md={4}>
-            <Paper className={classes.paper}>
-              <Scoreboard />
-            </Paper>
+            <Scoreboard />
           </Grid>
         </Grid>
       </React.Fragment>

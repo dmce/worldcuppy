@@ -48,11 +48,9 @@ const styles = theme => ({
   },
   winChip: {
     backgroundColor: theme.palette.primary[100],
-    
   },
   drawChip: {
     backgroundColor: yellow[50],
-    
   },
   flag: {
     paddingRight: 8,
@@ -71,7 +69,14 @@ class Result extends React.Component {
   processPicks = (picksData, outcome) => {
     let userPicks = [];
     picksData.picks.forEach((u, i) => {
-      const p = new PickHelper(u._id, u.fixtureId, u.outcome, u.gameday, u.user, u.username);
+      const p = new PickHelper(
+        u._id,
+        u.fixtureId,
+        u.outcome,
+        u.gameday,
+        u.user,
+        u.username
+      );
       p.inPlayPoints(outcome);
       userPicks.push(p);
     });
@@ -85,7 +90,10 @@ class Result extends React.Component {
     let pickData;
     if (showAllPicks) {
       pickData = await PickHelper.getByFixtureId(fixture.Id);
-      pickData = this.processPicks(JSON.parse(pickData), fixture.outcome.result);
+      pickData = this.processPicks(
+        JSON.parse(pickData),
+        fixture.outcome.result
+      );
     }
 
     this.setState({ allPicks: pickData.userPicks });
@@ -95,11 +103,11 @@ class Result extends React.Component {
     const { fixture, userPick, classes, key } = this.props;
     const { allPicks } = this.state;
 
-    userPick && userPick.inPlayPoints(fixture.outcome.result)
+    userPick && userPick.inPlayPoints(fixture.outcome.result);
 
     return (
       <Card>
-        {fixture ? (
+        {fixture && (
           <CardContent>
             <Grid container key={key} spacing={24}>
               <Grid item xs={3}>
@@ -186,7 +194,9 @@ class Result extends React.Component {
                         avatar: classes.avatar,
                         label: classes.label,
                       }}
-                      className={`${userPick.points === 3 && classes.winChip} ${userPick.points === 1 && classes.drawChip}`}
+                      className={`${userPick.points === 3 &&
+                        classes.winChip} ${userPick.points === 1 &&
+                        classes.drawChip}`}
                       avatar={
                         <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
                       }
@@ -212,7 +222,8 @@ class Result extends React.Component {
                         avatar: classes.avatar,
                         label: classes.label,
                       }}
-                      className={`${p.points === 3 && classes.winChip} ${p.points === 1 && classes.drawChip}`}
+                      className={`${p.points === 3 &&
+                        classes.winChip} ${p.points === 1 && classes.drawChip}`}
                       avatar={<Avatar src={`flags/sq/16/${p.outcome}.png`} />}
                     />
                   ))}
@@ -220,8 +231,6 @@ class Result extends React.Component {
               )}
             </Grid>
           </CardContent>
-        ) : (
-          <CardContent>RED</CardContent>
         )}
       </Card>
     );
