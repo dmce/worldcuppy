@@ -15,16 +15,14 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>
-        <Grid container className={classes.root} spacing={8}>
-          <Grid item xs={12} md={8}>
-            <MatchList />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Scoreboard />
-          </Grid>
+      <Grid container className={classes.root} spacing={8}>
+        <Grid item xs={12} md={4}>
+          <Scoreboard />
         </Grid>
-      </React.Fragment>
+        <Grid item xs={12} md={8}>
+          <MatchList />
+        </Grid>
+      </Grid>
     );
   }
 }
