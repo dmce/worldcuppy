@@ -22,6 +22,7 @@ const styles = theme => ({
   paper: {
     marginTop: theme.spacing.unit * 1,
     padding: theme.spacing.unit * 2,
+    backgroundColor: theme.palette.secondary[100],
   },
 });
 
@@ -57,10 +58,20 @@ class MatchList extends React.Component {
       );
 
       // TODO: REMOVE THIS
-      //if (i === 0) {
-      //  fixture.status = 'FINISHED';
-      //  fixture.goals(2, 3);
-      //}
+      // if (i === 0) {
+      //   fixture.status = 'FINISHED';
+      //   fixture.goals(4, 3);
+      // }
+
+      // if (i === 1) {
+      //   fixture.status = 'FINISHED';
+      //   fixture.goals(1, 0);
+      // }
+
+      // if (i === 2) {
+      //   fixture.status = 'FINISHED';
+      //   fixture.goals(0, 3);
+      // }
 
       // TODO: END
 
@@ -70,13 +81,13 @@ class MatchList extends React.Component {
 
       switch (fixture.status) {
         case 'FINISHED':
-          //fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
+          fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
           fixturesFinished.push(fixture);
           break;
         case 'IN_PLAY':
         case 'GAMEDAY_ACTIVE':
         case 'GAMEDAY_FINISHED':
-          //fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
+          fixture.goals(f.result.goalsHomeTeam, f.result.goalsAwayTeam);
           fixturesInPlay.push(fixture);
           break;
         case 'TIMED':
@@ -100,6 +111,8 @@ class MatchList extends React.Component {
           u.fixtureId,
           u.outcome,
           u.gameday,
+          u.points,
+          u.resolved,
           u.user,
           u.username
         )
