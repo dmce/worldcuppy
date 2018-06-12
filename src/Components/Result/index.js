@@ -74,6 +74,8 @@ class Result extends React.Component {
         u.fixtureId,
         u.outcome,
         u.gameday,
+        u.points,
+        u.resolved,
         u.user,
         u.username
       );
