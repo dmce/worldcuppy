@@ -5,15 +5,9 @@ import Result from '../Result';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
-const styles = theme => ({
-  card: theme.mixins.gutters({
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: theme.palette.primary[50],
-  }),
-});
+const styles = theme => ({});
 
 class ResultList extends React.Component {
   constructor(props) {
@@ -21,7 +15,7 @@ class ResultList extends React.Component {
   }
 
   render() {
-    const { classes, fixtures, userPicks, defaultMessage } = this.props;
+    const { fixtures, userPicks, defaultMessage } = this.props;
 
     return (
       <React.Fragment>
