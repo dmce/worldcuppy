@@ -11,10 +11,10 @@ import {
   Typography,
   CircularProgress,
   Fade,
-  Card,
-  CardContent,
   Paper,
 } from '@material-ui/core';
+import yellow from '@material-ui/core/colors/yellow';
+import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
   p: {
@@ -28,6 +28,21 @@ const styles = theme => ({
   paper: {
     marginTop: theme.spacing.unit * 1,
     padding: theme.spacing.unit * 2,
+    backgroundColor: theme.palette.secondary[100],
+  },
+  paperTable: {
+    marginTop: theme.spacing.unit * 3,
+  },
+  table: {
+    '& tbody tr:last-child': {
+      backgroundColor: red[50],
+    },
+    '& tbody tr:nth-child(1)': {
+      backgroundColor: theme.palette.primary[50],
+    },
+    '& tbody tr:nth-child(2)': {
+      backgroundColor: yellow[50],
+    },
   },
 });
 
@@ -89,28 +104,26 @@ class Scoreboard extends React.Component {
           !isLoading &&
           scoreboardData &&
           scoreboardData.length > 0 && (
-            <Card className={classes.card}>
-              <CardContent>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Player</TableCell>
-                      <TableCell>Picks</TableCell>
-                      <TableCell>Points</TableCell>
+            <Paper className={classes.paperTable}>
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Player</TableCell>
+                    <TableCell>Picks</TableCell>
+                    <TableCell>Points</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {scoreboardData.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{row._id.username}</TableCell>
+                      <TableCell>{row.Picks}</TableCell>
+                      <TableCell>{row.Points}</TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {scoreboardData.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{row._id.username}</TableCell>
-                        <TableCell>{row.Picks}</TableCell>
-                        <TableCell>{row.Points}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
           )}
         {!hasError &&
           !isLoading &&
