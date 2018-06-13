@@ -21,6 +21,7 @@ const styles = theme => ({
   },
   button: {
     backgroundColor: theme.palette.primary[50],
+    marginTop: '10px',
   },
   selectedButton: {},
   availableButton: {
@@ -69,20 +70,22 @@ class Fixture extends React.Component {
           fixture.gameday % 2 === 0 ? classes.oddGameday : classes.evenGameday
         }
       >
-        <Grid container spacing={8}>
-          <Grid item xs={3}>
+        <Grid container spacing={0}>
+          <Grid item xs={6}>
             <Typography color="textSecondary" variant="body1" align="left">
-              <strong>Gameday {fixture.gameday}</strong>
-            </Typography>
-            <Typography color="textSecondary" variant="body1" align="left">
-              <strong>
-                {fixture.kickOff} {fixture.date}
-              </strong>
+              Gameday <strong>{fixture.gameday}</strong>
             </Typography>
           </Grid>
+          <Grid item xs={6}>
+            <Typography color="textSecondary" variant="body1" align="right">
+              {fixture.date} {fixture.kickOff}
+            </Typography>
+          </Grid>
+          <Grid item xs={false} sm={2} />
           <Grid
             item
-            xs={4}
+            xs={6}
+            sm={4}
             className={homeDisabled ? classes.disabledFilter : ''}
           >
             <Button
@@ -119,9 +122,11 @@ class Fixture extends React.Component {
               {fixture.homeTeamName}
             </Button>
           </Grid>
+
           <Grid
             item
-            xs={4}
+            xs={6}
+            sm={4}
             className={awayDisabled ? classes.disabledFilter : ''}
           >
             <Button
@@ -158,6 +163,7 @@ class Fixture extends React.Component {
               />
             </Button>
           </Grid>
+          <Grid item xs={false} sm={2} />
         </Grid>
       </Paper>
     );
