@@ -15,6 +15,13 @@ const theme = createMuiTheme({
     primary: lightGreen,
     secondary: grey,
   },
+  overrides: {
+    MuiTableCell: {
+      root: {
+        padding: '4px 4px 4px 16px',
+      },
+    },
+  },
 });
 
 const auth = new Auth();
