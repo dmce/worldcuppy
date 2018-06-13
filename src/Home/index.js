@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    maxWidth: '1280px',
+    margin: '0 auto',
   },
 });
 
@@ -16,10 +18,10 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <Grid container className={classes.root} spacing={8}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <Scoreboard />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} lg={8}>
           <MatchList />
         </Grid>
       </Grid>
