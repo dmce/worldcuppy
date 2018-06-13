@@ -15,21 +15,33 @@ import {
 import yellow from '@material-ui/core/colors/yellow';
 import red from '@material-ui/core/colors/red';
 
-import Timelapse from '@material-ui/icons/Timelapse';
+import {
+  Timelapse,
+  Schedule,
+  AlarmOff,
+  ThumbUp,
+  ThumbDown,
+  ThumbsUpDown,
+} from '@material-ui/icons/';
 
 const styles = theme => ({
   root: {
-    backgroundColor: red[50],
+    backgroundColor: 'transparent',
     margin: theme.spacing.unit / 4,
     borderRadius: 8,
     height: 24,
     padding: 4,
   },
+  flexGrid: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   fixtureData: {
     fontSize: 'xx-large',
-    fontWeight: 'lighter',
-    display: 'inline',
-    verticalAlign: 'top',
+    color: 'rgba(0, 0, 0, 0.54)',
+  },
+  userPicks: {
+    marginTop: '20px',
   },
   picked: {
     filter: 'unset',
@@ -47,13 +59,31 @@ const styles = theme => ({
     height: 16,
   },
   winChip: {
-    backgroundColor: theme.palette.primary[100],
+    backgroundColor: theme.palette.primary[50],
+    color: theme.palette.secondary[800],
   },
   drawChip: {
     backgroundColor: yellow[50],
+    color: theme.palette.secondary[800],
+  },
+  lossChip: {
+    backgroundColor: red[50],
+    color: theme.palette.secondary[800],
   },
   flag: {
     paddingRight: 8,
+  },
+  winIcon: {
+    color: theme.palette.primary[200],
+    fontSize: 30,
+  },
+  drawIcon: {
+    color: yellow[200],
+    fontSize: 30,
+  },
+  lossIcon: {
+    color: red[200],
+    fontSize: 30,
   },
 });
 
@@ -111,8 +141,8 @@ class Result extends React.Component {
       <Card>
         {fixture && (
           <CardContent>
-            <Grid container key={key} spacing={24}>
-              <Grid item xs={3}>
+            <Grid container key={key}>
+              <Grid item xs={6} sm={6} md={2}>
                 <Typography
                   color="textSecondary"
                   variant="display1"
@@ -127,7 +157,7 @@ class Result extends React.Component {
                 >
                   {fixture.date}
                 </Typography>
-                {fixture.status === 'IN_PLAY' ? (
+                {fixture.status === 'IN_PLAY' && (
                   <Typography
                     color="textSecondary"
                     variant="caption"
@@ -135,86 +165,94 @@ class Result extends React.Component {
                   >
                     <Timelapse color="primary" />
                   </Typography>
-                ) : (
-                  ''
+                )}
+                {fixture.status === 'FINISHED' && (
+                  <Typography
+                    color="textSecondary"
+                    variant="caption"
+                    align="center"
+                  >
+                    <AlarmOff color="secondary" />
+                  </Typography>
+                )}
+                {fixture.status === 'GAMEDAY_ACTIVE' && (
+                  <Typography
+                    color="textSecondary"
+                    variant="caption"
+                    align="center"
+                  >
+                    <Schedule color="secondary" />
+                  </Typography>
                 )}
               </Grid>
-              <Grid item xs={7}>
-                <Grid container alignItems="stretch">
-                  <Grid item xs={10}>
+              <Grid item xs={6} sm={6} md={2}>
+                {userPick && (
+                  <React.Fragment>
+                    <Typography align="center">
+                      {userPick.points === 3 && (
+                        <ThumbUp className={classes.winIcon}>WIN</ThumbUp>
+                      )}
+                      {userPick.points === 1 && (
+                        <ThumbsUpDown className={classes.drawIcon} />
+                      )}
+                      {userPick.points === 0 && (
+                        <ThumbDown className={classes.lossIcon} />
+                      )}
+                    </Typography>
+                    <Typography align="center" component="span">
+                      <Chip
+                        label={userPick.outcome}
+                        classes={{
+                          root: classes.root,
+                          avatar: classes.avatar,
+                          label: classes.label,
+                        }}
+                        avatar={
+                          <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
+                        }
+                      />
+                    </Typography>
+                  </React.Fragment>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={12} md={8}>
+                <Grid container>
+                  <Grid item xs={11} className={classes.flexGrid}>
                     <img
                       className={classes.flag}
                       src={`flags/sq/48/${fixture.homeTeamName}.png`}
                       alt={`${fixture.homeTeamName} Flag`}
                     />
-                    <Typography
-                      component="span"
-                      className={classes.fixtureData}
-                    >
+                    <Typography className={classes.fixtureData}>
                       {fixture.homeTeamName}
                     </Typography>
                   </Grid>
-                  <Grid item xs={2}>
-                    <Typography
-                      component="span"
-                      className={classes.fixtureData}
-                    >
+                  <Grid item xs={1} className={classes.flexGrid}>
+                    <Typography align="right" className={classes.fixtureData}>
                       {fixture.outcome.homeGoals}
                     </Typography>
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={11} className={classes.flexGrid}>
                     <img
                       className={classes.flag}
                       src={`flags/sq/48/${fixture.awayTeamName}.png`}
                       alt={`${fixture.awayTeamName} Flag`}
                     />
 
-                    <Typography
-                      component="span"
-                      className={classes.fixtureData}
-                    >
+                    <Typography className={classes.fixtureData}>
                       {fixture.awayTeamName}
                     </Typography>
                   </Grid>
-                  <Grid item xs={2}>
-                    <Typography
-                      component="span"
-                      className={classes.fixtureData}
-                    >
+                  <Grid item xs={1} className={classes.flexGrid}>
+                    <Typography align="right" className={classes.fixtureData}>
                       {fixture.outcome.awayGoals}
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={2}>
-                <Typography align="center" component="span">
-                  {userPick && (
-                    <Chip
-                      label={userPick.outcome}
-                      classes={{
-                        root: classes.root,
-                        avatar: classes.avatar,
-                        label: classes.label,
-                      }}
-                      className={`${userPick.points === 3 &&
-                        classes.winChip} ${userPick.points === 1 &&
-                        classes.drawChip}`}
-                      avatar={
-                        <Avatar src={`flags/sq/16/${userPick.outcome}.png`} />
-                      }
-                    />
-                  )}
-                </Typography>
-                <Typography
-                  color="textSecondary"
-                  variant="display3"
-                  align="center"
-                >
-                  {userPick && userPick.points}
-                </Typography>
-              </Grid>
+
               {allPicks && (
-                <Grid item xs={12}>
+                <Grid item xs={12} className={classes.userPicks}>
                   {allPicks.map(p => (
                     <Chip
                       key={p.Id}
@@ -225,7 +263,9 @@ class Result extends React.Component {
                         label: classes.label,
                       }}
                       className={`${p.points === 3 &&
-                        classes.winChip} ${p.points === 1 && classes.drawChip}`}
+                        classes.winChip} ${p.points === 1 &&
+                        classes.drawChip} ${p.points === 0 &&
+                        classes.lossChip}`}
                       avatar={<Avatar src={`flags/sq/16/${p.outcome}.png`} />}
                     />
                   ))}
