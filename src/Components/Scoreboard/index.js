@@ -109,7 +109,7 @@ class Scoreboard extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Player</TableCell>
-                    <TableCell>Picks</TableCell>
+                    <TableCell>Picks (Finished / Total)</TableCell>
                     <TableCell>Points</TableCell>
                   </TableRow>
                 </TableHead>
@@ -117,7 +117,9 @@ class Scoreboard extends React.Component {
                   {scoreboardData.map((row, index) => (
                     <TableRow key={index}>
                       <TableCell>{row._id.username}</TableCell>
-                      <TableCell>{row.Picks}</TableCell>
+                      <TableCell>
+                        {row.PicksFinished} / {row.PicksTotal}
+                      </TableCell>
                       <TableCell>{row.Points}</TableCell>
                     </TableRow>
                   ))}
