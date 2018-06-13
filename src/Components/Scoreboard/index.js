@@ -30,9 +30,6 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     backgroundColor: theme.palette.secondary[100],
   },
-  paperTable: {
-    marginTop: theme.spacing.unit * 3,
-  },
   table: {
     '& tbody tr:last-child': {
       backgroundColor: red[50],
