@@ -110,6 +110,8 @@ class Scoreboard extends React.Component {
                   <TableRow>
                     <TableCell>Player</TableCell>
                     <TableCell>Picks (Finished / Total)</TableCell>
+                    <TableCell>Wins</TableCell>
+                    <TableCell>Draw</TableCell>
                     <TableCell>Points</TableCell>
                   </TableRow>
                 </TableHead>
@@ -120,6 +122,8 @@ class Scoreboard extends React.Component {
                       <TableCell>
                         {row.PicksFinished} / {row.PicksTotal}
                       </TableCell>
+                      <TableCell>{row.PicksWins}</TableCell>
+                      <TableCell>{row.PicksDraws}</TableCell>
                       <TableCell>{row.Points}</TableCell>
                     </TableRow>
                   ))}
