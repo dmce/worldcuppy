@@ -64,12 +64,12 @@ class MatchList extends React.Component {
       // }
 
       // if (i === 1) {
-      //   fixture.status = 'FINISHED';
+      //   fixture.status = 'IN_PLAY';
       //   fixture.goals(1, 0);
       // }
 
       // if (i === 2) {
-      //   fixture.status = 'FINISHED';
+      //   fixture.status = 'IN_PLAY';
       //   fixture.goals(0, 3);
       // }
 
