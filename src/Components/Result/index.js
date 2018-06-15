@@ -166,7 +166,7 @@ class Result extends React.Component {
                     <Timelapse color="primary" />
                   </Typography>
                 )}
-                {fixture.status === 'FINISHED' && (
+                {(fixture.status === 'FINISHED' || fixture.status === 'GAMEDAY_FINISHED') && (
                   <Typography
                     color="textSecondary"
                     variant="caption"
