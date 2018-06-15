@@ -1,4 +1,5 @@
 import React from 'react';
+import format from 'date-fns/format';
 
 import FixtureHelper from '../../Helpers/fixture';
 import PickHelper from '../../Helpers/pick';
@@ -75,9 +76,12 @@ class MatchList extends React.Component {
 
       // TODO: END
 
-      if (fixture.status === 'IN_PLAY') activeGameday = fixture.gameday;
-      if (fixture.gameday === activeGameday && fixture.status === 'TIMED')
-        fixture.status = 'GAMEDAY_ACTIVE';
+      //if (fixture.status === 'IN_PLAY') activeGameday = fixture.gameday;
+      //if (fixture.gameday === activeGameday && fixture.status === 'TIMED')
+      //  fixture.status = 'GAMEDAY_ACTIVE';
+
+      if (fixture.date === format(new Date(), 'ddd Do MMMM')){
+      fixture.status = 'GAMEDAY_ACTIVE';}
 
       switch (fixture.status) {
         case 'FINISHED':
