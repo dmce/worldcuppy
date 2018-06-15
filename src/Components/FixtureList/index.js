@@ -98,6 +98,9 @@ class FixtureList extends React.Component {
           Pick one team from each gameday. You cannot pick the same team more
           than once.
         </Typography>
+        <Typography>
+         TEMP CHANGE: Picks must be made before 10am for fixtures on that day. Login expires after 1 hour.
+         </Typography>
         {fixtures &&
           fixtures.map(
             (fixture, index) => (
