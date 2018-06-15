@@ -80,8 +80,19 @@ class MatchList extends React.Component {
       //if (fixture.gameday === activeGameday && fixture.status === 'TIMED')
       //  fixture.status = 'GAMEDAY_ACTIVE';
 
-      if (fixture.date === format(new Date(), 'ddd Do MMMM')){
-      fixture.status = 'GAMEDAY_ACTIVE';}
+      const curDate = new Date();
+
+      if (fixture.date === format(curDate, 'ddd Do MMMM') &&
+        curDate.getHours() > 10) {
+        switch (fixture.status) {
+          case 'TIMED':
+            fixture.status = 'GAMEDAY_ACTIVE';
+            break;
+          case 'FINISHED':
+            fixture.status = 'GAMEDAY_FINISHED';
+            break;        
+        }
+      }
 
       switch (fixture.status) {
         case 'FINISHED':
