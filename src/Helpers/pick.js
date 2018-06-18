@@ -19,9 +19,10 @@ export default class Pick {
     this.username = username;
     this.resolved = resolved;
     this.points = points;
+    this._inPlayPoints(outcome);
   }
 
-  inPlayPoints(outcome) {
+  _inPlayPoints(outcome) {
     if (!this.resolved) {
       switch (outcome) {
         case 'd':
@@ -37,23 +38,63 @@ export default class Pick {
     }
   }
 
-  static add(body) {
-    return api.add('picks', body);
+  add() {
+    return api.add('picks', this);
   }
 
-  static delete(Id) {
-    return api.delete('picks', Id);
+  delete() {
+    return api.delete('picks', this);
   }
 
-  static get(Id) {
-    return api.get('picks', Id);
+  static processPicks(data) {
+    let picks = [];
+    data.picks.forEach((u, i) => {
+      picks.push(
+        new Pick(
+          u._id,
+          u.fixtureId,
+          u.outcome,
+          u.gameday,
+          u.points,
+          u.resolved,
+          u.user,
+          u.username
+        )
+      );
+    });
+    return picks;
   }
 
-  static getByUser() {
-    return api.getByUser('picks/user');
+  static async get(Id) {
+    const data = await api.get('picks', Id);
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(this.processPicks(JSON.parse(data)));
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  static getByFixtureId(Id) {
-    return api.get('picks/fixture', Id);
+  static async getByUser() {
+    const data = await api.getByUser('picks/user');
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(this.processPicks(JSON.parse(data)));
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  static async getByFixtureId(Id) {
+    const data = await api.get('picks/fixture', Id);
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(this.processPicks(JSON.parse(data)));
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 }
