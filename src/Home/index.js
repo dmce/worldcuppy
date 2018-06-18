@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import MatchList from '../Components/MatchList/';
-import Scoreboard from '../Components/Scoreboard';
+import TimedFixtureList from '../Components/FixtureList/Timed';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,10 +18,7 @@ class Home extends Component {
     return (
       <Grid container className={classes.root} spacing={8}>
         <Grid item xs={12} lg={4}>
-          <Scoreboard />
-        </Grid>
-        <Grid item xs={12} lg={8}>
-          <MatchList />
+          <TimedFixtureList />
         </Grid>
       </Grid>
     );
