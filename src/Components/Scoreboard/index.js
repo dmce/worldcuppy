@@ -108,7 +108,7 @@ class Scoreboard extends React.Component {
                     <TableCell>Player</TableCell>
                     <TableCell>Picks (Finished / Total)</TableCell>
                     <TableCell>Wins</TableCell>
-                    <TableCell>Draw</TableCell>
+                    <TableCell>Draws</TableCell>
                     <TableCell>Points</TableCell>
                   </TableRow>
                 </TableHead>
