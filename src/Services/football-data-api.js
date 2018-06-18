@@ -28,8 +28,8 @@ const accessApi = async (method, endPoint, route = '') => {
 };
 
 const footballData = {
-  getFixtures: competition => {
-    return accessApi('GET', `competitions/${competition}/fixtures`);
+  getFixtures: (competition, filter = '') => {
+    return accessApi('GET', `competitions/${competition}/fixtures/${filter}`);
   },
 };
 
