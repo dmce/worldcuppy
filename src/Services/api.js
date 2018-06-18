@@ -9,13 +9,13 @@ function handleErrors(response) {
   return response;
 }
 
-const getData = async (method, endPoint, route = '') => {
+const getData = (method, endPoint, route = '') => {
   const header = new Headers({
     authorization: `Bearer ${localStorage.getItem('access_token')}`,
     'Content-Type': 'application/json',
   });
 
-  return await fetch(`${config.url}/${endPoint}/${route}`, {
+  return fetch(`${config.url}/${endPoint}/${route}`, {
     mode: 'cors',
     method: method,
     headers: header,
@@ -28,13 +28,13 @@ const getData = async (method, endPoint, route = '') => {
     });
 };
 
-const postData = async (method, endPoint, route = '', body = '') => {
+const postData = (method, endPoint, route = '', body = '') => {
   const header = new Headers({
     authorization: `Bearer ${localStorage.getItem('access_token')}`,
     'Content-Type': 'application/json',
   });
 
-  return await fetch(`${config.url}/${endPoint}/${route}`, {
+  return fetch(`${config.url}/${endPoint}/${route}`, {
     mode: 'cors',
     method: method,
     headers: header,
