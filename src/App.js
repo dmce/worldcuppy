@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-
 import Home from './Home';
 import Admin from './Admin';
 import ProtectedRoute from './Authentication/protected-route';
@@ -40,10 +37,6 @@ const styles = theme => ({
   },
 });
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_APOLLO_END,
-});
-
 class App extends Component {
   handleAuthentication = ({ location, history }) => {
     if (/access_token|id_token|error/.test(location.hash)) {
@@ -56,7 +49,7 @@ class App extends Component {
     const auth = this.props.auth;
 
     return (
-      <ApolloProvider client={client}>
+      <React.Fragment>
         <AppBar position="static" color="default">
           <Toolbar>
             <Typography
@@ -88,7 +81,7 @@ class App extends Component {
             return <Callback {...props} />;
           }}
         />
-      </ApolloProvider>
+      </React.Fragment>
     );
   }
 }

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Auth from './Authentication/auth-service';
 import { BrowserRouter as Router } from 'react-router-dom';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 
 import Raven from 'raven-js';
 
@@ -33,11 +35,17 @@ Raven.config(
   'https://e92c038f80e94b9c905340094b9a7c30@sentry.io/1223433'
 ).install();
 
+const client = new ApolloClient({
+  uri: process.env.REACT_APP_APOLLO_END,
+});
+
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <Router>
-      <App auth={auth} />
-    </Router>
-  </MuiThemeProvider>,
+  <ApolloProvider client={client}>
+    <MuiThemeProvider theme={theme}>
+      <Router>
+        <App auth={auth} />
+      </Router>
+    </MuiThemeProvider>
+  </ApolloProvider>,
   document.getElementById('root')
 );
