@@ -74,6 +74,7 @@ class Fixture extends React.Component {
           <Grid item xs={6}>
             <Typography color="textSecondary" variant="body1" align="left">
               Gameday <strong>{fixture.gameday}</strong>
+              <small> - {fixture.Id}</small>
             </Typography>
           </Grid>
           <Grid item xs={6}>

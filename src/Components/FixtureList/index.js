@@ -43,7 +43,7 @@ class FixtureList extends React.Component {
     PickHelper.delete(pick).then(() => {
       PickHelper.add(pick)
         .then(() => {
-          userPicks = userPicks.filter(u => u.gameday !== gameday);
+          userPicks = userPicks.filter(u => u.fixtureId !== fixtureId);
           userPicks.push(pick);
           this.setState({ userPicks });
         })
@@ -65,7 +65,7 @@ class FixtureList extends React.Component {
 
     PickHelper.delete(pick)
       .then(() => {
-        userPicks = userPicks.filter(u => u.gameday !== gameday);
+        userPicks = userPicks.filter(u => u.fixtureId !== fixtureId);
         this.setState({ userPicks });
       })
       .catch(error => {
@@ -99,8 +99,9 @@ class FixtureList extends React.Component {
           than once.
         </Typography>
         <Typography>
-         TEMP CHANGE: Picks must be made before 10am for fixtures on that day. Login expires after 1 hour.
-         </Typography>
+          TEMP CHANGE: Picks must be made before 10am for fixtures on that day.
+          Login expires after 1 hour.
+        </Typography>
         {fixtures &&
           fixtures.map(
             (fixture, index) => (
@@ -110,12 +111,12 @@ class FixtureList extends React.Component {
                 removePick={this.removePick}
                 fixture={fixture}
                 pick={userPicks.find(p => p.fixtureId === fixture.Id)}
-                homeTeamPick={userPicks.find(
-                  p => p.outcome === fixture.homeTeamName
-                )}
-                awayTeamPick={userPicks.find(
-                  p => p.outcome === fixture.awayTeamName
-                )}
+                // homeTeamPick={userPicks.find(
+                //   p => p.outcome === fixture.homeTeamName
+                // )}
+                // awayTeamPick={userPicks.find(
+                //   p => p.outcome === fixture.awayTeamName
+                // )}
               />
             ),
             this
