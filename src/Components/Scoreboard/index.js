@@ -79,6 +79,9 @@ class Scoreboard extends React.Component {
     return (
       <Paper className={classes.paper}>
         <Typography variant="display2">Scoreboard</Typography>
+        <Typography>
+          +3 for win, +1 for draw (90 mins), +1 for win AET
+        </Typography>
         {isLoading && (
           <Fade
             in={isLoading}
@@ -108,7 +111,7 @@ class Scoreboard extends React.Component {
                     <TableCell>Player</TableCell>
                     <TableCell>Picks (Finished / Total)</TableCell>
                     <TableCell>Wins</TableCell>
-                    <TableCell>Draws</TableCell>
+                    <TableCell>Draws (Win Bonus)</TableCell>
                     <TableCell>Points</TableCell>
                   </TableRow>
                 </TableHead>
@@ -120,7 +123,9 @@ class Scoreboard extends React.Component {
                         {row.PicksFinished} / {row.PicksTotal}
                       </TableCell>
                       <TableCell>{row.PicksWins}</TableCell>
-                      <TableCell>{row.PicksDraws}</TableCell>
+                      <TableCell>
+                        {row.PicksDraws} / {row.PicksBonus}
+                      </TableCell>
                       <TableCell>{row.Points}</TableCell>
                     </TableRow>
                   ))}
