@@ -99,7 +99,7 @@ class FixtureList extends React.Component {
           than once.
         </Typography>
         <Typography>
-          TEMP CHANGE: Picks must be made before 10am for fixtures on that day.
+          TEMP CHANGE: Picks must be made before 1400 for fixtures on that day.
           Login expires after 1 hour.
         </Typography>
         {fixtures &&

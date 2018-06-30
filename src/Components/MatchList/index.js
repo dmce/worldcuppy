@@ -84,7 +84,7 @@ class MatchList extends React.Component {
 
       if (
         fixture.date === format(curDate, 'ddd Do MMMM') &&
-        curDate.getHours() >= 10
+        curDate.getHours() >= 14
       ) {
         switch (fixture.status) {
           case 'TIMED':
