@@ -95,8 +95,7 @@ class FixtureList extends React.Component {
     return (
       <React.Fragment>
         <Typography>
-          Pick one team from each gameday. You cannot pick the same team more
-          than once.
+          Pick a result for every match. No team restrictions
         </Typography>
         <Typography>
           TEMP CHANGE: Picks must be made before 1400 for fixtures on that day.
