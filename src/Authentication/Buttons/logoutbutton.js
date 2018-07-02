@@ -1,16 +1,10 @@
 import React from 'react';
-
 import { withRouter } from 'react-router-dom';
-
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core/';
-
-const styles = theme => ({});
 
 const LogoutButton = props =>
   props.auth.isAuthenticated() && (
     <p>
-      <Button
+      <button
         color="inherit"
         onClick={() => {
           props.auth.logout();
@@ -18,8 +12,8 @@ const LogoutButton = props =>
         }}
       >
         Logout
-      </Button>
+      </button>
     </p>
   );
 
-export default withRouter(withStyles(styles)(LogoutButton));
+export default withRouter(LogoutButton);

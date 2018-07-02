@@ -1,41 +1,16 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
+import Dashboard from './Components/Dashboard';
 import Home from './Home';
 import Admin from './Admin';
 import ProtectedRoute from './Authentication/protected-route';
 import Login from './Authentication/login';
 import Callback from './Components/Callback';
 
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import LogoutButton from './Authentication/Buttons/logoutbutton';
 import LoginButton from './Authentication/Buttons/loginbutton';
+import LogoutButton from './Authentication/Buttons/logoutbutton';
 import Profile from './Authentication/profile';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  avatar: {
-    height: 30,
-    width: 30,
-  },
-  profile: {
-    ...theme.typography.button,
-    padding: theme.spacing.unit,
-    lineHeight: '1.4em',
-  },
-});
 
 class App extends Component {
   handleAuthentication = ({ location, history }) => {
@@ -50,22 +25,13 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <AppBar position="static" color="default">
-          <Toolbar>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.flex}
-            >
-              WorldCuppy
-            </Typography>
-            {/* <Link to="/home">Home</Link> */}
-            {/* <Link to="/admin">Admin</Link> */}
-            <Profile auth={auth} />
-            <LoginButton auth={auth} />
-            <LogoutButton auth={auth} />
-          </Toolbar>
-        </AppBar>
+        <h1>WorldCuppy</h1>
+        <Profile auth={auth} />
+        <LoginButton auth={auth} />
+        <LogoutButton auth={auth} />
+
+        <Dashboard />
+
         <Route
           path="/login"
           component={props => {
@@ -86,4 +52,4 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App);
+export default App;

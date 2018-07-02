@@ -2,32 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Auth from './Authentication/auth-service';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import Raven from 'raven-js';
-
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
-import lightGreen from '@material-ui/core/colors/lightGreen';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: lightGreen,
-    secondary: grey,
-  },
-  overrides: {
-    MuiTableCell: {
-      root: {
-        padding: '8px 8px 28px 16px',
-        '@media (max-width: 600px)': {
-          padding: '0 0 0 6px',
-        },
-      },
-    },
-  },
-});
 
 const auth = new Auth();
 
@@ -41,11 +20,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <MuiThemeProvider theme={theme}>
-      <Router>
-        <App auth={auth} />
-      </Router>
-    </MuiThemeProvider>
+    <BrowserRouter>
+      <App auth={auth} />
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root')
 );

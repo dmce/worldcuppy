@@ -1,22 +1,17 @@
 import React from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core/';
-
-const styles = theme => ({});
-
 const LoginButton = props =>
   !props.auth.isAuthenticated() && (
     <p>
-      <Button
+      <button
         color="inherit"
         onClick={() => {
           props.auth.login();
         }}
       >
         Login
-      </Button>
+      </button>
     </p>
   );
 
-export default withStyles(styles)(LoginButton);
+export default LoginButton;

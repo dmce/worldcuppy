@@ -5,10 +5,11 @@ const Courses = () => (
   <Query
     query={gql`
       {
-        picks {
+        fixtures(competitionId: 467) {
           id
-          user
-          outcome
+          date
+          homeTeamName
+          awayTeamName
         }
       }
     `}
@@ -16,9 +17,11 @@ const Courses = () => (
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error :(</p>;
-      return data.picks.map(({ id, user, outcome }) => (
-        <div key={id}>
-          <p>{`${outcome} by ${user}`}</p>
+      return data.fixtures.map(fixture => (
+        <div key={fixture.id}>
+          <p>{`${fixture.date} - ${fixture.homeTeamName} v ${
+            fixture.awayTeamName
+          }`}</p>
         </div>
       ));
     }}
