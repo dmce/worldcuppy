@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import Dashboard from './Components/Dashboard';
-import Home from './Home';
-import Admin from './Admin';
-import ProtectedRoute from './Authentication/protected-route';
-import Login from './Authentication/login';
-import Callback from './Components/Callback';
+import Dashboard from './components/Dashboard';
+import Home from './home';
+import Admin from './admin';
+import ProtectedRoute from './authentication/protected-route';
+import Login from './authentication/login';
+import Callback from './components/Callback';
 
-import LoginButton from './Authentication/Buttons/loginbutton';
-import LogoutButton from './Authentication/Buttons/logoutbutton';
-import Profile from './Authentication/profile';
+import LoginButton from './authentication/Buttons/loginbutton';
+import LogoutButton from './authentication/Buttons/logoutbutton';
+import Profile from './authentication/profile';
 
 class App extends Component {
   handleAuthentication = ({ location, history }) => {

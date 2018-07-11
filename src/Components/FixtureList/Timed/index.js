@@ -5,7 +5,7 @@ const Courses = () => (
   <Query
     query={gql`
       {
-        fixtures(competitionId: 467) {
+        fixtures(competitionId: 467, timeFrameStart: '', timeFrameEnd: '') {
           id
           date
           homeTeamName

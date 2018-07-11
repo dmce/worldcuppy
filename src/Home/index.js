@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TimedFixtureList from '../Components/FixtureList/Timed';
+import TimedFixtureList from '../components/FixtureList/Timed';
 
 class Home extends Component {
   render() {
