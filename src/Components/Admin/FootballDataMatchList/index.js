@@ -38,18 +38,24 @@ const FootballDataMatchList = ({ competitionId }) => (
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
+
       return (
         <React.Fragment>
           <h1>Matches - FROM API</h1>
-          <div>Count: {data.fd_matches.count}</div>
-          {data.fd_matches.matches && (
-            <ul>
-              {data.fd_matches.matches.map(match => (
-                <li key={match.id}>
-                  <FootballDataMatch match={match} />
-                </li>
-              ))}
-            </ul>
+          {!data.fd_matches && <React.Fragment>Empty</React.Fragment>}
+          {data.fd_matches && (
+            <React.Fragment>
+              <div>Count: {data.fd_matches.count}</div>
+              {data.fd_matches.matches && (
+                <ul>
+                  {data.fd_matches.matches.map(match => (
+                    <li key={match.id}>
+                      <FootballDataMatch match={match} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </React.Fragment>
           )}
         </React.Fragment>
       );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FootballDataCompetitionList from '../components/Admin/FootballDataCompetitionList';
 import FootballDataCompetition from '../components/Admin/FootballDataCompetition';
+import FootballDataMatchList from '../components/Admin/FootballDataMatchList';
 
 class Home extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Home extends Component {
         {this.state.competitionId !== null && (
           <React.Fragment>
             <FootballDataCompetition id={this.state.competitionId} />
+            <FootballDataMatchList competitionId={this.state.competitionId} />
           </React.Fragment>
         )}
       </React.Fragment>

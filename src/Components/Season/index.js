@@ -9,7 +9,6 @@ const Season = props => {
       {season.currentMatchday}
       {current && (
         <React.Fragment>
-          <button>Upsert Fixtures</button>
           <label>Current Season</label>
         </React.Fragment>
       )}

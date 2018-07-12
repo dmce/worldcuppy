@@ -56,7 +56,7 @@ const FootballDataCompetition = ({ id }) => (
           Last Updated: {data.fd_competition.lastUpdated}
           <br />
           <Competition
-            id={data.fd_competition.id}
+            apiId={data.fd_competition.id}
             currentSeasonId={data.fd_competition.currentSeason.id}
           />
         </React.Fragment>

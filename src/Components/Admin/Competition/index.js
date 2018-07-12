@@ -7,11 +7,10 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 import SeasonList from '../../SeasonList';
-import FootballDataMatchList from '../FootballDataMatchList';
 
 const QUERY = gql`
-  query Competition($id: Int!) {
-    competition(id: $id) {
+  query Competitions($apiId: Int!) {
+    competitions(where: { apiId: $apiId }) {
       id
       name
       seasons {
@@ -25,8 +24,8 @@ const QUERY = gql`
   }
 `;
 
-const Competition = ({ id, currentSeasonId }) => (
-  <Query query={QUERY} variables={{ id }}>
+const Competition = ({ apiId, currentSeasonId }) => (
+  <Query query={QUERY} variables={{ apiId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -35,21 +34,24 @@ const Competition = ({ id, currentSeasonId }) => (
         <React.Fragment>
           <h1>Competition - FROM GQL</h1>
           <button>Upsert</button>
-          {!data.competition && (
+          {data.competitions.length === 0 && (
             <React.Fragment>
               COMPETITION DOESNT EXIST IN GQL. UPSERT COMPETITION AND INSERT
               CURRENT SEASON &amp; FIXTURES IF IT HASNT STARTED
             </React.Fragment>
           )}
-          {data.competition && (
+
+          {data.competitions.length > 0 && (
             <React.Fragment>
               COMPETITION EXISTS IN GQL. UPSERT COMPETITON AND UPSERT CURRENT
               SEASON AND FIXTURES IF IT HASNT STARTED
-              <SeasonList
-                seasons={data.competition.seasons}
-                currentSeasonId={currentSeasonId}
-              />
-              <FootballDataMatchList competitionId={id} />
+              {data.competitions.map(competition => (
+                <SeasonList
+                  key={competition.id}
+                  seasons={competition.seasons}
+                  currentSeasonId={currentSeasonId}
+                />
+              ))}
             </React.Fragment>
           )}
         </React.Fragment>
@@ -59,7 +61,7 @@ const Competition = ({ id, currentSeasonId }) => (
 );
 
 Competition.propTypes = {
-  id: PropTypes.number,
+  apiId: PropTypes.number,
   currentSeasonId: PropTypes.number,
 };
 
