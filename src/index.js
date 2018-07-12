@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Auth from './authentication/auth-service';
 import { BrowserRouter } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import Raven from 'raven-js';
@@ -15,7 +15,8 @@ Raven.config(
 ).install();
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_APOLLO_END,
+  link: new HttpLink({ uri: process.env.REACT_APP_APOLLO_END }),
+  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(

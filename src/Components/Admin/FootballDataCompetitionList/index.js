@@ -23,10 +23,12 @@ const FootballDataCompetitionList = props => (
   <Query query={QUERY}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
-      if (error) return <Error />;
+      if (error) return <Error error={error.message} />;
 
       return (
         <React.Fragment>
+          <h1>Competitions - FROM API</h1>
+          <strong>FROM API</strong>
           <div>Count: {data.fd_competitions.count}</div>
           <ul>
             {data.fd_competitions.competitions

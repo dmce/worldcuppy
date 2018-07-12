@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CompetitionList from '../components/Admin/FootballDataCompetitionList';
-import Competition from '../components/Admin/FootballDataCompetition';
+import FootballDataCompetitionList from '../components/Admin/FootballDataCompetitionList';
+import FootballDataCompetition from '../components/Admin/FootballDataCompetition';
 
 class Home extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Home extends Component {
 
   getCompetitionId(event) {
     this.setState({
-      competitionId: parseInt(event.target.dataset.competitionid),
+      competitionId: parseInt(event.target.dataset.competitionid, 10),
     });
   }
 
@@ -35,12 +35,15 @@ class Home extends Component {
           <option value="TIER_THREE">Tier Three</option>
           <option value="TIER_FOUR">Tier Four</option>
         </select>
-        <CompetitionList
+        <br />
+        <FootballDataCompetitionList
           plan={this.state.plan}
           getCompetitionId={this.getCompetitionId}
         />
         {this.state.competitionId !== null && (
-          <Competition id={this.state.competitionId} />
+          <React.Fragment>
+            <FootballDataCompetition id={this.state.competitionId} />
+          </React.Fragment>
         )}
       </React.Fragment>
     );
