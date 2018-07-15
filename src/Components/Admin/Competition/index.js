@@ -7,8 +7,9 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 import SeasonList from '../../SeasonList';
+import AddCompetition from './add';
 
-const QUERY = gql`
+const GET_COMPETITIONS = gql`
   query Competitions($apiId: Int!) {
     competitions(where: { apiId: $apiId }) {
       id
@@ -25,7 +26,7 @@ const QUERY = gql`
 `;
 
 const Competition = ({ apiId, currentSeasonId }) => (
-  <Query query={QUERY} variables={{ apiId }}>
+  <Query query={GET_COMPETITIONS} variables={{ apiId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -33,7 +34,6 @@ const Competition = ({ apiId, currentSeasonId }) => (
       return (
         <React.Fragment>
           <h1>Competition - FROM GQL</h1>
-          <button>Upsert</button>
           {data.competitions.length === 0 && (
             <React.Fragment>
               COMPETITION DOESNT EXIST IN GQL. UPSERT COMPETITION AND INSERT
