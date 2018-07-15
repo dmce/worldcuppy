@@ -23,7 +23,9 @@ const AddCompetition = props => {
     <Mutation
       mutation={ADD_COMPETITION}
       update={(cache, { data: { createCompetition } }) => {
-        const { competitions } = cache.readQuery({ query: GET_COMPETITIONS });
+        const { competitions } = cache.readQuery({
+          query: GET_COMPETITIONS,
+        });
         cache.writeQuery({
           query: GET_COMPETITIONS,
           data: { competitions: competitions.concat([createCompetition]) },
