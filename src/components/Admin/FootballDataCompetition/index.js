@@ -7,7 +7,6 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 import Competition from '../Competition';
-import AddCompetition from '../Competition/add';
 
 const QUERY = gql`
   query FootballDataCompetition($id: Int!) {
@@ -35,7 +34,6 @@ const FootballDataCompetition = ({ id }) => (
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
-
       return (
         <React.Fragment>
           <h1>Competition - FROM API</h1>
@@ -56,11 +54,7 @@ const FootballDataCompetition = ({ id }) => (
           <br />
           Last Updated: {data.fd_competition.lastUpdated}
           <br />
-          <Competition
-            apiId={data.fd_competition.id}
-            currentSeasonId={data.fd_competition.currentSeason.id}
-          />
-          <AddCompetition competition={data.fd_competition} />
+          <Competition fd_competition={data.fd_competition} />
         </React.Fragment>
       );
     }}

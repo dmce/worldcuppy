@@ -25,6 +25,7 @@ const AddCompetition = props => {
       update={(cache, { data: { createCompetition } }) => {
         const { competitions } = cache.readQuery({
           query: GET_COMPETITIONS,
+          variables: { apid: competition.apiId },
         });
         cache.writeQuery({
           query: GET_COMPETITIONS,

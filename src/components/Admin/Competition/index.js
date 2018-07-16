@@ -1,32 +1,16 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 import Error from '../../Error';
 import Loading from '../../Loading';
 
 import SeasonList from '../../SeasonList';
-import AddCompetition from './add';
+import AddCompetition from '../Competition/add';
+import { GET_COMPETITIONS } from '../../../queries/CompetitionsQuery';
 
-const GET_COMPETITIONS = gql`
-  query Competitions($apiId: Int!) {
-    competitions(where: { apiId: $apiId }) {
-      id
-      name
-      seasons {
-        id
-        apiId
-        startDate
-        endDate
-        currentMatchday
-      }
-    }
-  }
-`;
-
-const Competition = ({ apiId, currentSeasonId }) => (
-  <Query query={GET_COMPETITIONS} variables={{ apiId }}>
+const Competition = ({ fd_competition }) => (
+  <Query query={GET_COMPETITIONS} variables={{ apiId: fd_competition.id }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -38,6 +22,7 @@ const Competition = ({ apiId, currentSeasonId }) => (
             <React.Fragment>
               COMPETITION DOESNT EXIST IN GQL. UPSERT COMPETITION AND INSERT
               CURRENT SEASON &amp; FIXTURES IF IT HASNT STARTED
+              <AddCompetition competition={fd_competition} />
             </React.Fragment>
           )}
 
@@ -49,9 +34,10 @@ const Competition = ({ apiId, currentSeasonId }) => (
                 <SeasonList
                   key={competition.id}
                   seasons={competition.seasons}
-                  currentSeasonId={currentSeasonId}
+                  currentSeasonId={fd_competition.currentSeason.id}
                 />
               ))}
+              <AddCompetition competition={fd_competition} />
             </React.Fragment>
           )}
         </React.Fragment>
@@ -61,8 +47,7 @@ const Competition = ({ apiId, currentSeasonId }) => (
 );
 
 Competition.propTypes = {
-  apiId: PropTypes.number,
-  currentSeasonId: PropTypes.number,
+  fd_competition: PropTypes.object,
 };
 
 export default Competition;
