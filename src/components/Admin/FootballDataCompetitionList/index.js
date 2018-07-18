@@ -12,8 +12,19 @@ const QUERY = gql`
       count
       competitions {
         id
+        area {
+          id
+          name
+        }
         name
         plan
+        currentSeason {
+          id
+          startDate
+          endDate
+          currentMatchday
+        }
+        lastUpdated
       }
     }
   }

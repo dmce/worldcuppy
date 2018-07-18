@@ -42,6 +42,7 @@ const FootballDataMatchList = ({ competitionId }) => (
       return (
         <React.Fragment>
           <h1>Matches - FROM API</h1>
+          <p>IF THE SEASON EXISTS THEN THE FIXTURES EXIST</p>
           {!data.fd_matches && <React.Fragment>Empty</React.Fragment>}
           {data.fd_matches && (
             <React.Fragment>

@@ -7,39 +7,22 @@ import Loading from '../../Loading';
 
 import SeasonList from '../../SeasonList';
 import AddCompetition from '../Competition/add';
-import { GET_COMPETITIONS } from '../../../queries/CompetitionsQuery';
+import { GET_FILTERED_COMPETITIONS } from '../../../queries/CompetitionsQuery';
 
-const Competition = ({ fd_competition }) => (
-  <Query query={GET_COMPETITIONS} variables={{ apiId: fd_competition.id }}>
+const Competition = ({ fdCompetition }) => (
+  <Query
+    query={GET_FILTERED_COMPETITIONS}
+    variables={{ apiId: fdCompetition.id }}
+  >
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
-
       return (
         <React.Fragment>
-          <h1>Competition - FROM GQL</h1>
-          {data.competitions.length === 0 && (
-            <React.Fragment>
-              COMPETITION DOESNT EXIST IN GQL. UPSERT COMPETITION AND INSERT
-              CURRENT SEASON &amp; FIXTURES IF IT HASNT STARTED
-              <AddCompetition competition={fd_competition} />
-            </React.Fragment>
-          )}
-
-          {data.competitions.length > 0 && (
-            <React.Fragment>
-              COMPETITION EXISTS IN GQL. UPSERT COMPETITON AND UPSERT CURRENT
-              SEASON AND FIXTURES IF IT HASNT STARTED
-              {data.competitions.map(competition => (
-                <SeasonList
-                  key={competition.id}
-                  seasons={competition.seasons}
-                  currentSeasonId={fd_competition.currentSeason.id}
-                />
-              ))}
-              <AddCompetition competition={fd_competition} />
-            </React.Fragment>
-          )}
+          <AddCompetition
+            fd_competition={fdCompetition}
+            competition={data.competitions[0]}
+          />
         </React.Fragment>
       );
     }}
@@ -47,7 +30,7 @@ const Competition = ({ fd_competition }) => (
 );
 
 Competition.propTypes = {
-  fd_competition: PropTypes.object,
+  fdCompetition: PropTypes.object,
 };
 
 export default Competition;

@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import { GET_COMPETITIONS } from '../../../queries/CompetitionsQuery';
+import { GET_FILTERED_COMPETITIONS } from '../../../queries/CompetitionsQuery';
 
 import Error from '../../Error';
 import Loading from '../../Loading';
@@ -12,23 +12,35 @@ const ADD_COMPETITION = gql`
   mutation AddCompetition($data: CompetitionCreateInput!) {
     createCompetition(data: $data) {
       id
+      apiId
+      name
+      area
+      seasons {
+        id
+        apiId
+        startDate
+        endDate
+        currentMatchday
+      }
     }
   }
 `;
 
 const AddCompetition = props => {
-  const { competition } = props;
-
+  const { competition, fd_competition } = props;
+  console.log(fd_competition);
+  console.log(competition);
   return (
     <Mutation
       mutation={ADD_COMPETITION}
       update={(cache, { data: { createCompetition } }) => {
         const { competitions } = cache.readQuery({
-          query: GET_COMPETITIONS,
-          variables: { apid: competition.apiId },
+          query: GET_FILTERED_COMPETITIONS,
+          variables: { apiId: fd_competition.id },
         });
         cache.writeQuery({
-          query: GET_COMPETITIONS,
+          query: GET_FILTERED_COMPETITIONS,
+          variables: { apiId: fd_competition.id },
           data: { competitions: competitions.concat([createCompetition]) },
         });
       }}
@@ -41,9 +53,20 @@ const AddCompetition = props => {
               createCompetition({
                 variables: {
                   data: {
-                    apiId: competition.id,
-                    name: competition.name,
-                    area: competition.area.name,
+                    apiId: fd_competition.id,
+                    name: fd_competition.name,
+                    area: fd_competition.area.name,
+                    seasons: {
+                      create: [
+                        {
+                          apiId: fd_competition.currentSeason.id,
+                          startDate: fd_competition.currentSeason.startDate,
+                          endDate: fd_competition.currentSeason.endDate,
+                          currentMatchDay:
+                            fd_competition.currentSeason.currentMatchDay,
+                        },
+                      ],
+                    },
                   },
                 },
               });
@@ -61,6 +84,7 @@ const AddCompetition = props => {
 
 AddCompetition.propTypes = {
   competition: PropTypes.object,
+  fd_competition: PropTypes.object,
 };
 
 export default AddCompetition;

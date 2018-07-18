@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard';
 import Home from './home';
@@ -20,7 +20,6 @@ class App extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const auth = this.props.auth;
 
     return (
