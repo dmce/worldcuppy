@@ -28,8 +28,7 @@ const ADD_COMPETITION = gql`
 
 const AddCompetition = props => {
   const { competition, fd_competition } = props;
-  console.log(fd_competition);
-  console.log(competition);
+
   return (
     <Mutation
       mutation={ADD_COMPETITION}
@@ -62,8 +61,8 @@ const AddCompetition = props => {
                           apiId: fd_competition.currentSeason.id,
                           startDate: fd_competition.currentSeason.startDate,
                           endDate: fd_competition.currentSeason.endDate,
-                          currentMatchDay:
-                            fd_competition.currentSeason.currentMatchDay,
+                          currentMatchday:
+                            fd_competition.currentSeason.currentMatchday,
                         },
                       ],
                     },
