@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import { GET_FILTERED_COMPETITIONS } from '../../../queries/CompetitionsQuery';
+import { GET_COMPETITION } from '../../../queries/CompetitionsQuery';
 
 import Error from '../../Error';
 import Loading from '../../Loading';
@@ -27,18 +27,18 @@ const ADD_COMPETITION = gql`
 `;
 
 const AddCompetition = props => {
-  const { competition, fd_competition } = props;
+  const { fd_competition } = props;
 
   return (
     <Mutation
       mutation={ADD_COMPETITION}
       update={(cache, { data: { createCompetition } }) => {
         const { competitions } = cache.readQuery({
-          query: GET_FILTERED_COMPETITIONS,
+          query: GET_COMPETITION,
           variables: { apiId: fd_competition.id },
         });
         cache.writeQuery({
-          query: GET_FILTERED_COMPETITIONS,
+          query: GET_COMPETITION,
           variables: { apiId: fd_competition.id },
           data: { competitions: competitions.concat([createCompetition]) },
         });

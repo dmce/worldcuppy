@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
+import PropTypes from 'prop-types';
 
 import Error from '../Error';
 import Loading from '../Loading';
 import Empty from '../Empty';
 
-import { GET_MATCHES } from '../../queries/Matches';
+import SeasonList from '../SeasonList';
+import { GET_COMPETITION } from '../../queries/Competitions';
 
-const MatchList = ({ apiId }) => (
-  <Query query={GET_MATCHES} variables={{ apiId }}>
+const Competition = ({ apiId }) => (
+  <Query query={GET_COMPETITION} variables={{ apiId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -19,15 +20,15 @@ const MatchList = ({ apiId }) => (
         <React.Fragment>
           <h1>Competition in GQL</h1>
           <p>{data.competition.id}</p>
-          {/* <SeasonList seasons={data.competition.seasons} /> */}
+          <SeasonList seasons={data.competition.seasons} />
         </React.Fragment>
       );
     }}
   </Query>
 );
 
-MatchList.propTypes = {
-  apiId: PropTypes.number.isRequired,
+Competition.propTypes = {
+  apiId: PropTypes.number,
 };
 
-export default MatchList;
+export default Competition;

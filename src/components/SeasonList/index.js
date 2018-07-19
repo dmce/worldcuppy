@@ -7,18 +7,15 @@ const SeasonList = props => {
   const { seasons, currentSeasonId } = props;
   return (
     <React.Fragment>
-      <h1>Seasons</h1>
+      <h1>Seasons from GQL</h1>
       {seasons.length === 0 && <React.Fragment>NO SEASONS</React.Fragment>}
-      <ul>
-        {seasons.map(season => (
-          <li key={season.id}>
-            <Season
-              season={season}
-              current={season.apiId === currentSeasonId}
-            />
-          </li>
-        ))}
-      </ul>
+      {seasons.map(season => (
+        <Season
+          season={season}
+          current={season.apiId === currentSeasonId}
+          key={season.id}
+        />
+      ))}
     </React.Fragment>
   );
 };

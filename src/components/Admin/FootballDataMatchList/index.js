@@ -1,48 +1,23 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 import Error from '../../Error';
 import Loading from '../../Loading';
 import FootballDataMatch from '../FootballDataMatch';
 
-const QUERY = gql`
-  query FootballDataMatches($competitionId: Int!) {
-    fd_matches(competitionId: $competitionId) {
-      count
-      matches {
-        id
-        matchday
-        status
-        utcDate
-        homeTeam {
-          id
-          name
-        }
-        awayTeam {
-          id
-          name
-        }
-        score {
-          winner
-          duration
-        }
-      }
-    }
-  }
-`;
+import { GET_FD_MATCHES } from '../../../queries/FootballDataMatches';
 
 const FootballDataMatchList = ({ competitionId }) => (
-  <Query query={QUERY} variables={{ competitionId }}>
+  <Query query={GET_FD_MATCHES} variables={{ competitionId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
 
       return (
         <React.Fragment>
-          <h1>Matches - FROM API</h1>
-          <p>IF THE SEASON EXISTS THEN THE FIXTURES EXIST</p>
+          <h1>Matches from API</h1>
+          <strong>THIS IS WHERE WE NEED TO DO THE ADD/UPSERT</strong>
           {!data.fd_matches && <React.Fragment>Empty</React.Fragment>}
           {data.fd_matches && (
             <React.Fragment>

@@ -38,8 +38,7 @@ const FootballDataCompetitionList = props => (
 
       return (
         <React.Fragment>
-          <h1>Competitions - FROM API</h1>
-          <strong>FROM API</strong>
+          <h1>Competitions from API</h1>
           <div>Count: {data.fd_competitions.count}</div>
           <ul>
             {data.fd_competitions.competitions

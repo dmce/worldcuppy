@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const GET_FILTERED_COMPETITIONS = gql`
-  query Competitions($apiId: Int!) {
-    competitions(where: { apiId: $apiId }) {
+export const GET_COMPETITION = gql`
+  query Competition($apiId: Int!) {
+    competition(where: { apiId: $apiId }) {
       id
       apiId
       name
@@ -12,6 +12,9 @@ export const GET_FILTERED_COMPETITIONS = gql`
         startDate
         endDate
         currentMatchday
+        matches {
+          id
+        }
       }
     }
   }

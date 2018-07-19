@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 
 import FootballDataMatchList from '../FootballDataMatchList';
-import Competition from '../Competition';
+import Competition from '../../Competition';
 
 const FootballfdCompetitionCompetition = props => {
   const fdCompetition = props.client.readFragment({
@@ -29,33 +29,27 @@ const FootballfdCompetitionCompetition = props => {
 
   return (
     <React.Fragment>
-      <h1>{fdCompetition.name}</h1>
-      <p>DOES THIS COMPETITION EXIST IN GRAPHQL</p>
-      <p>
-        NO - LOAD COMPETITION, CURRENT SEASON AND FIXTURES<br />
-        YES - DO NOTHING
-      </p>
-      <Competition fdCompetition={fdCompetition} />
-      ID: {fdCompetition.id}
+      <h1>Competition from API</h1>
+      <h2>{fdCompetition.name}</h2>
+      apiId: {fdCompetition.id}
       <br />
       Area: {fdCompetition.area.name}
       <br />
-      <h2>Current Season</h2>
-      <p>DOES THE CURRENT SEASON EXIST IN GRAPHQL</p>
-      <p>
-        NO - LOAD CURRENT SEASON AND FIXTURES<br />
-        YES - UPDATE FIXTURES
-      </p>
-      {fdCompetition.currentSeason.startDate} -
-      {fdCompetition.currentSeason.endDate}
+      <h1>Current Season from API</h1>
+      Start: {fdCompetition.currentSeason.startDate}
       <br />
-      {fdCompetition.currentSeason.currentMatchday}
+      End: {fdCompetition.currentSeason.endDate}
       <br />
-      {fdCompetition.currentSeason.id}
+      Current Matchday:{' '}
+      {fdCompetition.currentSeason.currentMatchday
+        ? fdCompetition.currentSeason.currentMatchday
+        : 'Not Started'}
+      <br />
+      apiId:{fdCompetition.currentSeason.id}
       <br />
       Last Updated: {fdCompetition.lastUpdated}
-      <h2>Fixtures</h2>
       <FootballDataMatchList competitionId={fdCompetition.id} />
+      <Competition apiId={fdCompetition.id} />
     </React.Fragment>
   );
 };

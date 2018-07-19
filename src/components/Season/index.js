@@ -1,18 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MatchList from '../MatchList';
 
 const Season = props => {
   const { season, current } = props;
   return (
-    <React.Fragment>
-      {season.apiId} - {season.startDate} - {season.endDate} -{' '}
-      {season.currentMatchday}
+    <div>
+      Id: {season.apiId}
+      <br />
+      Start Date: {season.startDate}
+      <br />
+      End Date: {season.endDate}
+      <br />
+      Matchday: {season.currentMatchday}
+      <p>Current Season?</p>
       {current && (
         <React.Fragment>
           <label>Current Season</label>
         </React.Fragment>
       )}
-    </React.Fragment>
+      <MatchList />
+    </div>
   );
 };
 
