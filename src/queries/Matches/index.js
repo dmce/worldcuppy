@@ -5,14 +5,6 @@ export const GET_MATCHES = gql`
     matches(where: { apiId: $apiId }) {
       id
       apiId
-      name
-      seasons {
-        id
-        apiId
-        startDate
-        endDate
-        currentMatchday
-      }
     }
   }
 `;

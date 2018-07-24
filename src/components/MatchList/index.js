@@ -8,8 +8,8 @@ import Empty from '../Empty';
 
 import { GET_MATCHES } from '../../queries/Matches';
 
-const MatchList = ({ apiId }) => (
-  <Query query={GET_MATCHES} variables={{ apiId }}>
+const MatchList = ({ seasonApiId }) => (
+  <Query query={GET_MATCHES} variables={{ apiId: seasonApiId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -27,7 +27,7 @@ const MatchList = ({ apiId }) => (
 );
 
 MatchList.propTypes = {
-  apiId: PropTypes.number.isRequired,
+  seasonApiId: PropTypes.number.isRequired,
 };
 
 export default MatchList;

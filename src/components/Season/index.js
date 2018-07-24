@@ -19,7 +19,7 @@ const Season = props => {
           <label>Current Season</label>
         </React.Fragment>
       )}
-      <MatchList />
+      <MatchList seasonApiId={season.apiId} />
     </div>
   );
 };
