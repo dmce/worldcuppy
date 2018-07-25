@@ -19,3 +19,16 @@ export const GET_COMPETITION = gql`
     }
   }
 `;
+
+// upsertCompetition(where: CompetitionWhereUniqueInput!, create: CompetitionCreateInput!, update: CompetitionUpdateInput!): Competition!
+export const UPSERT_COMPETITION = gql`
+  mutation Competition(
+    $where: CompetitionWhereUniqueInput!
+    $create: CompetitionCreateInput!
+    $update: CompetitionUpdateInput!
+  ) {
+    upsertCompetition(where: $where, create: $create, update: $update) {
+      id
+    }
+  }
+`;

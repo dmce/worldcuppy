@@ -45,10 +45,10 @@ const FootballfdCompetitionCompetition = props => {
         ? fdCompetition.currentSeason.currentMatchday
         : 'Not Started'}
       <br />
-      apiId:{fdCompetition.currentSeason.id}
+      apiId: {fdCompetition.currentSeason.id}
       <br />
       Last Updated: {fdCompetition.lastUpdated}
-      <FootballDataMatchList competitionId={fdCompetition.id} />
+      <FootballDataMatchList fdCompetition={fdCompetition} />
       <Competition apiId={fdCompetition.id} />
     </React.Fragment>
   );

@@ -6,6 +6,7 @@ const Season = props => {
   const { season, current } = props;
   return (
     <div>
+      <h2>Season from GQL</h2>
       Id: {season.apiId}
       <br />
       Start Date: {season.startDate}
