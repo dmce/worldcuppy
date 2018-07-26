@@ -19,7 +19,12 @@ const Competition = ({ apiId }) => (
       return (
         <React.Fragment>
           <h1>Competition in GQL</h1>
-          <p>{data.competition.id}</p>
+          <p>
+            {data.competition.id}
+            <br />
+            {data.competition.name}
+          </p>
+
           <SeasonList seasons={data.competition.seasons} />
         </React.Fragment>
       );

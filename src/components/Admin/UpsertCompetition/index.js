@@ -17,18 +17,18 @@ const UpsertCompetition = props => {
     <Mutation
       mutation={UPSERT_COMPETITION}
       update={(cache, { data: { upsertCompetition } }) => {
-        const { competitions } = cache.readQuery({
-          query: GET_COMPETITION,
-          variables: { apiId: fdCompetition.id },
-        });
+        // const { competition } = cache.readQuery({
+        //   query: GET_COMPETITION,
+        //   variables: { apiId: fdCompetition.id },
+        // });
         cache.writeQuery({
           query: GET_COMPETITION,
-          variables: { apiId: fdCompetition.id },
-          data: { competitions: competitions.concat([upsertCompetition]) },
+          // variables: { apiId: fdCompetition.id },
+          data: { competition: upsertCompetition },
         });
       }}
     >
-      {(upsertCompetition, { loading, error, data }) => (
+      {(upsertCompetition, { loading, error }) => (
         <React.Fragment>
           <form
             onSubmit={e => {
@@ -43,7 +43,7 @@ const UpsertCompetition = props => {
                     seasons: null,
                   },
                   update: {
-                    apiId: fdCompetition.currentSeason.id,
+                    apiId: fdCompetition.id,
                     name: fdCompetition.name,
                     area: fdCompetition.area.name,
                     seasons: null,
@@ -52,7 +52,7 @@ const UpsertCompetition = props => {
               });
             }}
           >
-            <button type="submit">ADD</button>
+            <button type="submit">Upsert Competition</button>
           </form>
           {loading && <Loading />}
           {error && <Error error={error.message} />}
