@@ -30,6 +30,15 @@ const UpsertCompetition = props => {
     >
       {(upsertCompetition, { loading, error, data }) => (
         <React.Fragment>
+          <p>
+            This will either{' '}
+            <strong>create the competition, season and matches</strong> or{' '}
+            <strong>update just the competiton</strong>
+          </p>
+          <p>
+            it may be possible to do it all in one by doing create/upsert for
+            seasons and matches
+          </p>
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -40,7 +49,18 @@ const UpsertCompetition = props => {
                     apiId: fdCompetition.id,
                     name: fdCompetition.name,
                     area: fdCompetition.area.name,
-                    seasons: null,
+                    seasons: {
+                      create: [
+                        {
+                          apiId: fdCompetition.currentSeason.id,
+                          startDate: fdCompetition.currentSeason.startDate,
+                          endDate: fdCompetition.currentSeason.endDate,
+                          currentMatchday:
+                            fdCompetition.currentSeason.currentMatchday,
+                          matches: fdMatches.matches,
+                        },
+                      ],
+                    },
                   },
                   update: {
                     apiId: fdCompetition.currentSeason.id,
@@ -52,7 +72,7 @@ const UpsertCompetition = props => {
               });
             }}
           >
-            <button type="submit">ADD</button>
+            <button type="submit">Competiton</button>
           </form>
           {loading && <Loading />}
           {error && <Error error={error.message} />}
