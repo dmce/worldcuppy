@@ -17,13 +17,9 @@ const UpsertCompetition = props => {
     <Mutation
       mutation={UPSERT_COMPETITION}
       update={(cache, { data: { upsertCompetition } }) => {
-        // const { competition } = cache.readQuery({
-        //   query: GET_COMPETITION,
-        //   variables: { apiId: fdCompetition.id },
-        // });
         cache.writeQuery({
           query: GET_COMPETITION,
-          // variables: { apiId: fdCompetition.id },
+          variables: { apiId: fdCompetition.id },
           data: { competition: upsertCompetition },
         });
       }}
