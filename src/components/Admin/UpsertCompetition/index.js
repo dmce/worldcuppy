@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 import {
   GET_COMPETITION,
-  UPSERT_COMPETITION,
+  CREATE_COMPETITION,
 } from '../../../queries/Competitions';
 
 import Error from '../../Error';
 import Loading from '../../Loading';
 
-const UpsertCompetition = props => {
+const CreateCompetition = props => {
   const { fdCompetition, fdMatches } = props;
 
   let matches = [];
@@ -25,21 +25,31 @@ const UpsertCompetition = props => {
       'apiId',
       Object.getOwnPropertyDescriptor(match, 'id')
     );
+    match['winner'] = match.score.winner;
+    match['homeTeam'] = {
+      create: { apiId: match.homeTeam.id, name: match.homeTeam.name },
+    };
+    match['awayTeam'] = {
+      create: { apiId: match.awayTeam.id, name: match.awayTeam.name },
+    };
+
+    delete match['score'];
     delete match['id'];
+    delete match['__typename'];
   });
 
   return (
     <Mutation
-      mutation={UPSERT_COMPETITION}
-      update={(cache, { data: { upsertCompetition } }) => {
+      mutation={CREATE_COMPETITION}
+      update={(cache, { data: { createCompetition } }) => {
         cache.writeQuery({
           query: GET_COMPETITION,
           variables: { apiId: fdCompetition.id },
-          data: { competition: upsertCompetition },
+          data: { competition: createCompetition },
         });
       }}
     >
-      {(upsertCompetition, { loading, error }) => (
+      {(createCompetition, { loading, error }) => (
         <React.Fragment>
           <p>
             This will either <strong>create the competition, season</strong> or{' '}
@@ -52,10 +62,9 @@ const UpsertCompetition = props => {
           <form
             onSubmit={e => {
               e.preventDefault();
-              upsertCompetition({
+              createCompetition({
                 variables: {
-                  where: { apiId: fdCompetition.id },
-                  create: {
+                  data: {
                     apiId: fdCompetition.id,
                     name: fdCompetition.name,
                     area: fdCompetition.area.name,
@@ -67,22 +76,16 @@ const UpsertCompetition = props => {
                           endDate: fdCompetition.currentSeason.endDate,
                           currentMatchday:
                             fdCompetition.currentSeason.currentMatchday,
-                          matches: null,
+                          matches: { create: matches },
                         },
                       ],
                     },
-                  },
-                  update: {
-                    apiId: fdCompetition.id,
-                    name: fdCompetition.name,
-                    area: fdCompetition.area.name,
-                    seasons: null,
                   },
                 },
               });
             }}
           >
-            <button type="submit">Upsert Competition</button>
+            <button type="submit">Create Competition</button>
           </form>
           {loading && <Loading />}
           {error && <Error error={error.message} />}
@@ -92,9 +95,9 @@ const UpsertCompetition = props => {
   );
 };
 
-UpsertCompetition.propTypes = {
+CreateCompetition.propTypes = {
   fdMatches: PropTypes.array.isRequired,
   fdCompetition: PropTypes.object.isRequired,
 };
 
-export default UpsertCompetition;
+export default CreateCompetition;

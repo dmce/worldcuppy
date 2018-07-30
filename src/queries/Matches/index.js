@@ -5,11 +5,13 @@ export const GET_MATCHES = gql`
     matches(where: { apiId: $apiId }) {
       id
       apiId
-      date
+      utcDate
       homeTeam {
+        id
         name
       }
       awayTeam {
+        id
         name
       }
       duration
