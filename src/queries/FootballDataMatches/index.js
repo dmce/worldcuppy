@@ -8,6 +8,8 @@ export const GET_FD_MATCHES = gql`
         id
         matchday
         status
+        group
+        stage
         utcDate
         homeTeam {
           id
