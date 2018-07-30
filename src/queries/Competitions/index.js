@@ -20,6 +20,26 @@ export const GET_COMPETITION = gql`
   }
 `;
 
+export const GET_COMPETITIONS = gql`
+  query Competitions {
+    competitions {
+      id
+      apiId
+      name
+      seasons {
+        id
+        apiId
+        startDate
+        endDate
+        currentMatchday
+        matches {
+          id
+        }
+      }
+    }
+  }
+`;
+
 // upsertCompetition(where: CompetitionWhereUniqueInput!, create: CompetitionCreateInput!, update: CompetitionUpdateInput!): Competition!
 export const UPSERT_COMPETITION = gql`
   mutation Competition(
