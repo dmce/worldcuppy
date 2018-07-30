@@ -29,6 +29,18 @@ export const UPSERT_COMPETITION = gql`
   ) {
     upsertCompetition(where: $where, create: $create, update: $update) {
       id
+      apiId
+      name
+      seasons {
+        id
+        apiId
+        startDate
+        endDate
+        currentMatchday
+        matches {
+          id
+        }
+      }
     }
   }
 `;
