@@ -13,6 +13,21 @@ import Loading from '../../Loading';
 const UpsertCompetition = props => {
   const { fdCompetition, fdMatches } = props;
 
+  let matches = [];
+
+  fdMatches.forEach(fdMatch => {
+    matches.push(Object.assign({}, fdMatch));
+  });
+
+  matches.forEach(match => {
+    Object.defineProperty(
+      match,
+      'apiId',
+      Object.getOwnPropertyDescriptor(match, 'id')
+    );
+    delete match['id'];
+  });
+
   return (
     <Mutation
       mutation={UPSERT_COMPETITION}
@@ -27,8 +42,7 @@ const UpsertCompetition = props => {
       {(upsertCompetition, { loading, error }) => (
         <React.Fragment>
           <p>
-            This will either{' '}
-            <strong>create the competition, season and matches</strong> or{' '}
+            This will either <strong>create the competition, season</strong> or{' '}
             <strong>update just the competiton</strong>
           </p>
           <p>
@@ -53,7 +67,7 @@ const UpsertCompetition = props => {
                           endDate: fdCompetition.currentSeason.endDate,
                           currentMatchday:
                             fdCompetition.currentSeason.currentMatchday,
-                          matches: fdMatches.matches,
+                          matches: null,
                         },
                       ],
                     },
