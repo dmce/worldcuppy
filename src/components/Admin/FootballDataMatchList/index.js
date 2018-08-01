@@ -2,16 +2,14 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 
-import UpsertCompetition from '../UpsertCompetition';
-
 import Error from '../../Error';
 import Loading from '../../Loading';
 import FootballDataMatch from '../FootballDataMatch';
 
 import { GET_FD_MATCHES } from '../../../queries/FootballDataMatches';
 
-const FootballDataMatchList = ({ fdCompetition }) => (
-  <Query query={GET_FD_MATCHES} variables={{ competitionId: fdCompetition.id }}>
+const FootballDataMatchList = ({ competitionId }) => (
+  <Query query={GET_FD_MATCHES} variables={{ competitionId }}>
     {({ loading, error, data }) => {
       if (loading) return <Loading />;
       if (error) return <Error error={error.message} />;
@@ -29,10 +27,6 @@ const FootballDataMatchList = ({ fdCompetition }) => (
 
               {data.fd_matches.matches && (
                 <React.Fragment>
-                  <UpsertCompetition
-                    fdCompetition={fdCompetition}
-                    fdMatches={data.fd_matches.matches}
-                  />
                   <ul>
                     {data.fd_matches.matches.map(match => (
                       <li key={match.id}>
@@ -51,7 +45,7 @@ const FootballDataMatchList = ({ fdCompetition }) => (
 );
 
 FootballDataMatchList.propTypes = {
-  fdCompetition: PropTypes.object,
+  competitionId: PropTypes.number.isRequired,
 };
 
 export default FootballDataMatchList;

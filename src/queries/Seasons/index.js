@@ -1,46 +1,33 @@
 import gql from 'graphql-tag';
 
-export const GET_COMPETITION = gql`
-  query Competition($apiId: Int!) {
-    competition(where: { apiId: $apiId }) {
+export const GET_SEASON = gql`
+  query Season($apiId: Int!) {
+    season(where: { apiId: $apiId }) {
       id
       apiId
-      name
-      seasons {
+      startDate
+      endDate
+      currentMatchday
+      matches {
         id
-        apiId
-        startDate
-        endDate
-        currentMatchday
-        matches {
-          id
-        }
       }
     }
   }
 `;
 
-export const GET_COMPETITIONS = gql`
-  query Competitions {
-    competitions {
+export const GET_SEASONS = gql`
+  query Seasons($apiId: Int!) {
+    seasons(where: { apiId: $apiId }) {
       id
       apiId
-      name
-      seasons {
-        id
-        apiId
-        startDate
-        endDate
-        currentMatchday
-        matches {
-          id
-        }
-      }
+      startDate
+      endDate
+      currentMatchday
     }
   }
 `;
 
-export const CREATE_COMPETITION = gql`
+export const CREATE_SEASON = gql`
   mutation Competition($data: CompetitionCreateInput!) {
     createCompetition(data: $data) {
       id
@@ -60,7 +47,7 @@ export const CREATE_COMPETITION = gql`
   }
 `;
 
-export const UPDATE_COMPETITION = gql`
+export const UPDATE_SEASON = gql`
   mutation Competition(
     $data: CompetitionUpdateInput!
     $where: CompetitionWhereUniqueInput!
@@ -83,7 +70,7 @@ export const UPDATE_COMPETITION = gql`
   }
 `;
 
-export const UPSERT_COMPETITION = gql`
+export const UPSERT_SEASON = gql`
   mutation Competition(
     $where: CompetitionWhereUniqueInput!
     $create: CompetitionCreateInput!

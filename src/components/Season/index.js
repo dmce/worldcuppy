@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MatchList from '../MatchList';
 
 const Season = props => {
-  const { season, current } = props;
+  const { season } = props;
   return (
     <div>
       <h2>Season from GQL</h2>
@@ -14,12 +14,6 @@ const Season = props => {
       End Date: {season.endDate}
       <br />
       Matchday: {season.currentMatchday}
-      <p>Current Season?</p>
-      {current && (
-        <React.Fragment>
-          <label>Current Season</label>
-        </React.Fragment>
-      )}
       <MatchList seasonApiId={season.apiId} />
     </div>
   );

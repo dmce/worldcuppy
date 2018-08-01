@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 
-import FootballDataMatchList from '../FootballDataMatchList';
 import Competition from '../../Competition';
+import LoadCompetition from '../LoadCompetition';
 
 const FootballfdCompetitionCompetition = props => {
   const fdCompetition = props.client.readFragment({
@@ -48,8 +48,16 @@ const FootballfdCompetitionCompetition = props => {
       apiId: {fdCompetition.currentSeason.id}
       <br />
       Last Updated: {fdCompetition.lastUpdated}
-      <FootballDataMatchList fdCompetition={fdCompetition} />
-      <Competition apiId={fdCompetition.id} />
+      <div
+        style={{
+          position: 'absolute',
+          top: '1em',
+          left: '50%',
+        }}
+      >
+        <LoadCompetition fdCompetition={fdCompetition} />
+        <Competition apiId={fdCompetition.id} />
+      </div>
     </React.Fragment>
   );
 };

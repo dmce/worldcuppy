@@ -11,32 +11,7 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 const CreateCompetition = props => {
-  const { fdCompetition, fdMatches } = props;
-
-  let matches = [];
-
-  fdMatches.forEach(fdMatch => {
-    matches.push(Object.assign({}, fdMatch));
-  });
-
-  matches.forEach(match => {
-    Object.defineProperty(
-      match,
-      'apiId',
-      Object.getOwnPropertyDescriptor(match, 'id')
-    );
-    match['winner'] = match.score.winner;
-    match['homeTeam'] = {
-      create: { apiId: match.homeTeam.id, name: match.homeTeam.name },
-    };
-    match['awayTeam'] = {
-      create: { apiId: match.awayTeam.id, name: match.awayTeam.name },
-    };
-
-    delete match['score'];
-    delete match['id'];
-    delete match['__typename'];
-  });
+  const { fdCompetition, disable } = props;
 
   return (
     <Mutation
@@ -51,14 +26,6 @@ const CreateCompetition = props => {
     >
       {(createCompetition, { loading, error }) => (
         <React.Fragment>
-          <p>
-            This will either <strong>create the competition, season</strong> or{' '}
-            <strong>update just the competiton</strong>
-          </p>
-          <p>
-            it may be possible to do it all in one by doing create/upsert for
-            seasons and matches
-          </p>
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -76,7 +43,6 @@ const CreateCompetition = props => {
                           endDate: fdCompetition.currentSeason.endDate,
                           currentMatchday:
                             fdCompetition.currentSeason.currentMatchday,
-                          matches: { create: matches },
                         },
                       ],
                     },
@@ -85,7 +51,9 @@ const CreateCompetition = props => {
               });
             }}
           >
-            <button type="submit">Create Competition</button>
+            <button type="submit" disabled={disable}>
+              Create Competition
+            </button>
           </form>
           {loading && <Loading />}
           {error && <Error error={error.message} />}
@@ -96,8 +64,8 @@ const CreateCompetition = props => {
 };
 
 CreateCompetition.propTypes = {
-  fdMatches: PropTypes.array.isRequired,
   fdCompetition: PropTypes.object.isRequired,
+  disable: PropTypes.bool.isRequired,
 };
 
 export default CreateCompetition;
