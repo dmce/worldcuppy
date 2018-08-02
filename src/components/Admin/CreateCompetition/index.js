@@ -7,6 +7,8 @@ import {
   CREATE_COMPETITION,
 } from '../../../queries/Competitions';
 
+import { GET_SEASON } from '../../../queries/Seasons';
+
 import Error from '../../Error';
 import Loading from '../../Loading';
 
@@ -20,7 +22,17 @@ const CreateCompetition = props => {
         cache.writeQuery({
           query: GET_COMPETITION,
           variables: { apiId: fdCompetition.id },
-          data: { competition: createCompetition },
+          data: {
+            competition: createCompetition,
+          },
+        });
+        console.log(fdCompetition);
+        cache.writeQuery({
+          query: GET_SEASON,
+          variables: { apiId: fdCompetition.currentSeason.id },
+          data: {
+            season: createCompetition.seasons[0],
+          },
         });
       }}
     >
@@ -63,9 +75,13 @@ const CreateCompetition = props => {
   );
 };
 
+CreateCompetition.defaultProps = {
+  disable: false,
+};
+
 CreateCompetition.propTypes = {
   fdCompetition: PropTypes.object.isRequired,
-  disable: PropTypes.bool.isRequired,
+  disable: PropTypes.bool,
 };
 
 export default CreateCompetition;
