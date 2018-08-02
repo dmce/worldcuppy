@@ -43,7 +43,7 @@ const UpdateCompetition = props => {
               });
             }}
           >
-            <button type="submit" disabled={hasCompetition}>
+            <button type="submit" disabled={disable}>
               Update Competition
             </button>
           </form>
@@ -55,9 +55,13 @@ const UpdateCompetition = props => {
   );
 };
 
+UpdateCompetition.defaultProps = {
+  disable: false,
+};
+
 UpdateCompetition.propTypes = {
   fdCompetition: PropTypes.object.isRequired,
-  disable: PropTypes.bool.isRequired,
+  disable: PropTypes.bool,
 };
 
 export default UpdateCompetition;

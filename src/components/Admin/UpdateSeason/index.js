@@ -8,7 +8,7 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 const UpdateSeason = props => {
-  const { fdSeason, enabled } = props;
+  const { fdSeason, disable } = props;
 
   return (
     <Mutation
@@ -40,7 +40,7 @@ const UpdateSeason = props => {
               });
             }}
           >
-            <button type="submit" disabled={enabled}>
+            <button type="submit" disabled={disable}>
               Update Season
             </button>
           </form>
@@ -52,9 +52,13 @@ const UpdateSeason = props => {
   );
 };
 
+UpdateSeason.defaultProps = {
+  disable: false,
+};
+
 UpdateSeason.propTypes = {
   fdSeason: PropTypes.object.isRequired,
-  enabled: PropTypes.bool.isRequired,
+  disable: PropTypes.bool,
 };
 
 export default UpdateSeason;

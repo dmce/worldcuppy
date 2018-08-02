@@ -11,7 +11,7 @@ import Error from '../../Error';
 import Loading from '../../Loading';
 
 const CreateMatches = props => {
-  const { fdCompetition, fdMatches } = props;
+  const { fdCompetition, fdMatches, disable } = props;
 
   let matches = [];
 
@@ -91,8 +91,13 @@ const CreateMatches = props => {
   );
 };
 
+CreateMatches.defaultProps = {
+  disable: false,
+};
+
 CreateMatches.propTypes = {
   fdCompetition: PropTypes.object.isRequired,
+  disable: PropTypes.bool,
 };
 
 export default CreateMatches;

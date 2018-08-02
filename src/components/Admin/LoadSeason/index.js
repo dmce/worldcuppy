@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
 
-import { GET_SEASONS } from '../../../queries/Seasons';
+import { GET_SEASON } from '../../../queries/Seasons';
 import CreateSeason from '../CreateSeason';
 import UpdateSeason from '../UpdateSeason';
 
@@ -13,22 +13,21 @@ const LoadSeason = props => {
   const { fdSeason, hasCompetition } = props;
 
   return (
-    <Query query={GET_SEASONS} variables={{ apiId: fdSeason.id }}>
+    <Query query={GET_SEASON} variables={{ apiId: fdSeason.id }}>
       {({ loading, error, data }) => {
         if (loading) return <Loading />;
         if (error) return <Error error={error.message} />;
 
-        const hasSeason = Boolean(data.competition);
-
+        const hasSeason = Boolean(data.season);
         return (
           <React.Fragment>
             <CreateSeason
               fdSeason={fdSeason}
-              enabled={!hasSeason || hasCompetition}
+              disable={!(!hasSeason && hasCompetition)}
             />
             <UpdateSeason
               fdSeason={fdSeason}
-              enabled={hasSeason || hasCompetition}
+              disable={!(hasSeason && hasCompetition)}
             />
             SEASON
           </React.Fragment>

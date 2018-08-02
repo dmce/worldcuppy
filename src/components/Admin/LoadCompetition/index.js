@@ -29,11 +29,11 @@ const LoadCompetition = props => {
             />
             <UpdateCompetition
               fdCompetition={fdCompetition}
-              disable={hasCompetition}
+              disable={!hasCompetition}
             />
             <LoadSeason
               fdSeason={fdCompetition.currentSeason}
-              disable={hasCompetition}
+              hasCompetition={hasCompetition}
             />
           </React.Fragment>
         );
